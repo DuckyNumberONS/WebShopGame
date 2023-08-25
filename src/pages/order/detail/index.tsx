@@ -1,18 +1,37 @@
+import { postOrder } from "@/api/order";
+import { payOrder } from "@/api/payment";
 import { CartContext } from "@/lib/hook/Context/cartItem";
+import { LoginContext } from "@/lib/hook/Context/login";
 import React, { useContext, useEffect, useState } from "react";
+import { PayPalButton } from "react-paypal-button-v2";
 
 const OrderDetails = () => {
   const { cart } = useContext(CartContext);
-
+  const { dataUser } = useContext(LoginContext);
   const totalOrder = cart.reduce((total, items) => {
     return total + items.total;
   }, 0);
+  const cartOrder = cart.map((item) => ({
+    id: item._id,
+    quantity: item.quantity,
+    total: item.total,
+  }));
+
+  const PaymentOrder = () => {
+    const order = {
+      username: dataUser?.userFilter.username,
+      products: cartOrder,
+      totalOrder: totalOrder,
+    };
+    postOrder(order);
+    // payOrder(order);
+  };
 
   return (
     <div className="h-screen bg-gray-100 pt-20">
       <h1 className="mb-10 text-center text-2xl font-bold">Cart Items</h1>
       <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
-        <div className="rounded-lg md:w-2/3 h-[900px] overflow-auto">
+        <div className="rounded-lg md:w-2/3 h-[800px] overflow-auto">
           {cart.map((items) => (
             <div
               key={items._id}
@@ -86,8 +105,11 @@ const OrderDetails = () => {
               <p className="text-sm text-gray-700">including VAT</p>
             </div>
           </div>
-          <button className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">
-            Check out
+          <button
+            className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600"
+            onClick={PaymentOrder}
+          >
+            pay
           </button>
         </div>
       </div>

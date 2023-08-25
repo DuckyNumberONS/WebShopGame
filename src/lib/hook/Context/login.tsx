@@ -10,8 +10,9 @@ const Login = ({ children }: { children?: ReactNode }) => {
   const [dataUser, setUser] = useState<UserVerify | null>(null);
   useEffect(() => {
     const token = JSON.stringify(dataUser?.accessToken);
-    localStorage.setItem("token", token);
+    localStorage.setItem("token", token ? token : "");
   });
+
   return (
     <LoginContext.Provider value={{ dataUser, setUser }}>
       {children}

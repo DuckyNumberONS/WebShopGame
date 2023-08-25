@@ -13,7 +13,7 @@ export default instance;
 
 instance.interceptors.request.use(
   function (config: any) {
-    const dataToken = window.localStorage.getItem("dataUser");
+    const dataToken = window.localStorage.getItem("token");
     let token = dataToken?.slice(1, -1);
     config.headers = {
       token: `Bearer ${token}`,

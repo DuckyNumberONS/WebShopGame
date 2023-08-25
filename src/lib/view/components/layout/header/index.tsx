@@ -7,6 +7,7 @@ const Header = () => {
   const { cart, setCart } = useContext(CartContext);
   const { dataUser, setUser } = useContext(LoginContext);
   const handleCheckOut = () => {
+    localStorage.clear();
     setUser(null);
     setCart([]);
   };
