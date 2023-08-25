@@ -4,10 +4,11 @@ import Link from "next/link";
 import React, { useContext } from "react";
 
 const Header = () => {
-  const { cart } = useContext(CartContext);
+  const { cart, setCart } = useContext(CartContext);
   const { dataUser, setUser } = useContext(LoginContext);
   const handleCheckOut = () => {
     setUser(null);
+    setCart([]);
   };
   return (
     <nav id="header" className="w-full z-30 top-0 py-1">

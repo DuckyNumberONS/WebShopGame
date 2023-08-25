@@ -1,6 +1,6 @@
 import { getListProduct } from "@/api/product";
 import { Product } from "@/lib/domain/product";
-import ListSlider from "@/lib/view/components/Slider";
+import ListSlider from "@/lib/view/components/slider";
 import About from "@/lib/view/components/about";
 import ListItem from "@/lib/view/components/list-items";
 import React, { useEffect, useState } from "react";

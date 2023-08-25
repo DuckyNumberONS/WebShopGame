@@ -21,6 +21,9 @@ const ListItem = ({ data, category }: PropsListItems) => {
       const exists = cart.some((item) => item._id === data._id);
       const itemsProduct = {
         _id: data._id,
+        title: data.title,
+        urlImage: data.urlImage,
+        category: data.category,
         quantity: 1,
         total: data.price,
       };
