@@ -16,17 +16,19 @@ const ListSlider: React.FC<ListSliderProps> = ({ data }) => {
   };
   return (
     <section>
-      <Slider {...settings}>
-        <div>
-          {data
-            .filter((item) => item.isHot === true)
-            .map((items) => (
-              <div key={items._id}>
-                <img src={items.urlImage} alt={items.title} />
-              </div>
-            ))}
-        </div>
-      </Slider>
+      <div>
+        <Slider {...settings}>
+          <div>
+            {data
+              .filter((item) => item.isHot === true)
+              .map((items) => (
+                <div key={items._id}>
+                  <img src={items.urlImage} alt="" />
+                </div>
+              ))}
+          </div>
+        </Slider>
+      </div>
     </section>
   );
 };

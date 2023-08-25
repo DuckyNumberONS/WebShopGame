@@ -1,5 +1,8 @@
-import axios from "axios";
+import axios, { AxiosRequestHeaders } from "axios";
 import { API } from "@/lib/constants";
+// interface CustomAxiosRequestHeaders extends AxiosRequestHeaders {
+//   authorization: string;
+// }
 
 const instance = axios.create({
   baseURL: API,
@@ -7,3 +10,17 @@ const instance = axios.create({
 });
 
 export default instance;
+
+instance.interceptors.request.use(
+  function (config: any) {
+    const dataToken = window.localStorage.getItem("dataUser");
+    let token = dataToken?.slice(1, -1);
+    config.headers = {
+      token: `Bearer ${token}`,
+    };
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);

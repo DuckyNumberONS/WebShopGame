@@ -1,21 +1,21 @@
-import { User } from "@/lib/domain/user";
+import { Order } from "@/lib/domain/order";
 import axios from "../utils/index";
 
-export const getUser = async () => {
+export const getOrder = async () => {
   try {
-    const response = await axios.get("/user/getAllUser");
-    const users = response.data;
-    return users;
+    const response = await axios.get("/order/getOrder");
+    const order = response.data;
+    return order;
   } catch (error) {
     console.error(error);
   }
 };
 
-export const postUser = async (data: User) => {
+export const postOrder = async (data: Order) => {
   try {
-    const response = await axios.post("/user/createUser", data);
-    const users = response.data;
-    return users;
+    const response = await axios.post("/order/createOrder", data);
+    const order = response.data;
+    return order;
   } catch (error) {
     console.error(error);
   }

@@ -1,4 +1,3 @@
-import { User } from "@/lib/domain/user";
 import axios from "../utils/index";
 
 export const getListProduct = async () => {
