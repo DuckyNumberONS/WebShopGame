@@ -7,6 +7,7 @@ interface SwitcherProps {
   register: any;
   errors: any;
   errorsOption?: any;
+  defaultValue?: any;
 }
 
 const Switcher: React.FC<SwitcherProps> = ({
@@ -16,6 +17,7 @@ const Switcher: React.FC<SwitcherProps> = ({
   register,
   errors,
   errorsOption,
+  defaultValue,
 }) => {
   const [enabled, setEnabled] = useState(false);
   const handleChange = () => {
@@ -34,6 +36,7 @@ const Switcher: React.FC<SwitcherProps> = ({
         <div className="relative">
           <input
             type="checkbox"
+            value={defaultValue}
             id={name}
             className="sr-only"
             onClick={handleChange}

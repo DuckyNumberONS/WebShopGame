@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-interface InputdProps {
+interface InputProps {
   label: string;
   name: string;
   register: any;
@@ -10,9 +10,10 @@ interface InputdProps {
   classLabel: string;
   classInput: string;
   type: string;
+  defaultValue?: any;
 }
 
-const Input: React.FC<InputdProps> = ({
+const Input: React.FC<InputProps> = ({
   label,
   name,
   register,
@@ -21,9 +22,16 @@ const Input: React.FC<InputdProps> = ({
   errorsOption,
   classLabel,
   classInput,
+  defaultValue,
   type,
 }) => {
   const keys = errorsOption ? Object.keys(errorsOption) : [];
+
+  const [inputValue, setInputValue] = useState(defaultValue || "");
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
 
   return (
     <div>
@@ -34,11 +42,13 @@ const Input: React.FC<InputdProps> = ({
         className={classInput}
         id={name}
         type={type}
+        value={inputValue}
         placeholder={placeholder}
         {...register(name, {
           ...errorsOption,
           valueAsNumber: type === "number",
         })}
+        onChange={handleInputChange}
       />
       {keys.map((items) => (
         <>

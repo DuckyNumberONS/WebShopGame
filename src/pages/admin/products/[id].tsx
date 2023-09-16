@@ -1,15 +1,22 @@
-import { getItemProduct } from "@/api/product";
+import { getItemProduct, updateItemProduct } from "@/api/product";
 import { Product } from "@/lib/domain/product";
-import EditButton from "@/lib/view/components/edit-button";
+import { PopupContext } from "@/lib/hook/Context/popup";
+// import EditButton from "@/lib/view/components/edit-button";
+import Formroduct from "@/lib/view/components/form/form-product";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 const Details = () => {
   const [items, setItems] = useState<Product>();
   const [loading, setLoading] = useState(true);
+  const { popup, setPopup } = useContext(PopupContext);
   const { query } = useRouter();
   const id = query.id;
+
+  const handleClick = () => {
+    setPopup(true);
+  };
 
   useEffect(() => {
     const fetch = async () => {
@@ -22,6 +29,7 @@ const Details = () => {
 
   return (
     <section className="text-gray-700 body-font overflow-hidden dark:bg-boxdark bg-white">
+      <Formroduct fuctionApi={updateItemProduct} defaultValue={items} />
       <div className="container px-5 pt-5 pb-15 mx-auto">
         <button className="pb-4">
           <Link href="/admin/products">
@@ -53,16 +61,11 @@ const Details = () => {
           )}
 
           <div className="w-full lg:py-6 mt-6 lg:mt-0">
-            <EditButton
-              text={items?.title}
-              classInput={
-                "text-gray-900 dark:text-gray-50 text-3xl title-font font-medium"
-              }
-            >
+            <div className="flex items-center gap-4">
               <h1 className="text-gray-900 dark:text-gray-50 text-3xl title-font font-medium mb-1">
                 {items?.title}
               </h1>
-            </EditButton>
+            </div>
             <h2 className="text-sm title-font text-gray-500 dark:text-white tracking-widest">
               Category : {items?.category}
             </h2>
@@ -187,13 +190,21 @@ const Details = () => {
                 <button className="border-2 border-gray-300 ml-1 bg-red-500 rounded-full w-6 h-6 focus:outline-none"></button> */}
               </div>
             </div>
-            <div className="flex">
+            <div className="flex justify-between">
               <span className="title-font font-medium text-2xl text-gray-900 dark:text-gray-300">
                 ${items?.quantity}
               </span>
-              <button className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
-                Delete
-              </button>
+              <div className="flex">
+                <button
+                  className="mr-3 flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded"
+                  onClick={handleClick}
+                >
+                  Edit
+                </button>
+                <button className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
         </div>

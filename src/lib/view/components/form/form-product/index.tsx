@@ -6,8 +6,17 @@ import Input from "../../input";
 import Confirm from "../../confirm";
 import Select from "../../select";
 import Switcher from "../../switch";
+import { postProduct } from "@/api/product";
 
-const FormCreateProduct: React.FC = () => {
+interface PropsDefaultValue {
+  defaultValue?: Product;
+  fuctionApi: any;
+}
+
+const Formroduct: React.FC<PropsDefaultValue> = ({
+  defaultValue,
+  fuctionApi,
+}) => {
   const {
     register,
     handleSubmit,
@@ -48,7 +57,11 @@ const FormCreateProduct: React.FC = () => {
       {popup && (
         <>
           {confirm ? (
-            <Confirm setConfirm={setConfirm} data={product} />
+            <Confirm
+              fuctionApi={fuctionApi}
+              setConfirm={setConfirm}
+              data={product}
+            />
           ) : (
             <div className="absolute w-full h-full top-0 bg-black-shadow">
               <div className="w-full max-w-6xl mx-auto relative top-28">
@@ -82,6 +95,7 @@ const FormCreateProduct: React.FC = () => {
                   <div className="mb-4">
                     <Input
                       label="Tile"
+                      defaultValue={defaultValue ? defaultValue.title : ""}
                       name="title"
                       type="text"
                       register={register}
@@ -101,6 +115,9 @@ const FormCreateProduct: React.FC = () => {
                   <div className="mb-4">
                     <Input
                       label="Description"
+                      defaultValue={
+                        defaultValue ? defaultValue.description : ""
+                      }
                       name="description"
                       type="text"
                       register={register}
@@ -123,6 +140,7 @@ const FormCreateProduct: React.FC = () => {
                   <div className="mb-4">
                     <Input
                       label="Price"
+                      defaultValue={defaultValue ? defaultValue.price : 0}
                       name="price"
                       type="number"
                       register={register}
@@ -138,6 +156,7 @@ const FormCreateProduct: React.FC = () => {
                   <div className="mb-4">
                     <Input
                       label="Quantity"
+                      defaultValue={defaultValue ? defaultValue.quantity : 0}
                       name="quantity"
                       type="number"
                       register={register}
@@ -153,6 +172,7 @@ const FormCreateProduct: React.FC = () => {
                   <div className="mb-4">
                     <Input
                       label="UrlImage"
+                      defaultValue={defaultValue ? defaultValue.urlImage : ""}
                       name="urlImage"
                       type="text"
                       register={register}
@@ -168,6 +188,9 @@ const FormCreateProduct: React.FC = () => {
                   <div className="mb-4">
                     <Select
                       label="Category"
+                      defaultValue={
+                        defaultValue ? defaultValue.category : "game"
+                      }
                       name="category"
                       register={register}
                       errors={errors}
@@ -182,6 +205,7 @@ const FormCreateProduct: React.FC = () => {
                   </div>
                   <div className="mb-4">
                     <Switcher
+                      defaultValue={defaultValue ? defaultValue.isHot : false}
                       name="isHot"
                       register={register}
                       errors={errors}
@@ -204,4 +228,4 @@ const FormCreateProduct: React.FC = () => {
     </>
   );
 };
-export default FormCreateProduct;
+export default Formroduct;

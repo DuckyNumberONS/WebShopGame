@@ -12,10 +12,10 @@ interface SelectProps {
   errors: any;
   textSelect?: string;
   errorsOption?: any;
-  setValue?: any;
   classLabel: string;
   classSelect: string;
   options: Array<OptionProps>;
+  defaultValue?: any;
 }
 
 const Select: React.FC<SelectProps> = ({
@@ -28,7 +28,7 @@ const Select: React.FC<SelectProps> = ({
   textSelect,
   classLabel,
   classSelect,
-  setValue,
+  defaultValue,
 }) => {
   const keys = errorsOption ? Object.keys(errorsOption) : [];
 
@@ -41,9 +41,10 @@ const Select: React.FC<SelectProps> = ({
         id={name}
         {...register(name, errorsOption)}
         className={classSelect}
+        defaultValue={defaultValue}
       >
         <option value="" disabled selected>
-          Choose a category
+          {textSelect}
         </option>
         {options.map((items) => (
           <option key={items.value} value={`${items.value}`}>

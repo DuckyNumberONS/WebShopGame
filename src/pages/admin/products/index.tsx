@@ -1,9 +1,9 @@
-import { getListProduct } from "@/api/product";
+import { getListProduct, postProduct } from "@/api/product";
 import React, { useContext, useEffect, useState } from "react";
 import { Product } from "@/lib/domain/product";
 import { useRouter } from "next/router";
 import { PopupContext } from "@/lib/hook/Context/popup";
-import FormCreateProduct from "@/lib/view/components/form/form-create-product";
+import Formroduct from "@/lib/view/components/form/form-product";
 
 const Product = () => {
   const { push } = useRouter();
@@ -28,7 +28,7 @@ const Product = () => {
 
   return (
     <>
-      <FormCreateProduct />
+      <Formroduct fuctionApi={postProduct} />
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="py-6 px-4 md:px-6 xl:px-7.5 flex justify-between items-center">
           <h4 className="text-xl font-semibold text-black dark:text-white">
