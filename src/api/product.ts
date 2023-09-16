@@ -21,8 +21,8 @@ export const getItemProduct = async (id: string | string[] | undefined) => {
 };
 
 export const updateItemProduct = async (
-  id: string | string[] | undefined,
-  data: ProductPost
+  data: ProductPost,
+  id: string | string[] | undefined
 ) => {
   try {
     const response = await axios.put(`/product/updateProduct/${id}`, data);

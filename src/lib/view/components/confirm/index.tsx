@@ -1,6 +1,5 @@
-import { postProduct } from "@/api/product";
 import { PopupContext } from "@/lib/hook/Context/popup";
-import Image from "next/image";
+import { useRouter } from "next/router";
 import React, { useContext } from "react";
 
 interface DataObject {
@@ -9,12 +8,14 @@ interface DataObject {
 interface Props {
   setConfirm: (value: boolean) => void;
   data: DataObject;
+  fuctionApi: (data: DataObject, id?: string | string[] | undefined) => void;
 }
 
-const Confirm: React.FC<Props> = ({ setConfirm, data }) => {
+const Confirm: React.FC<Props> = ({ setConfirm, data, fuctionApi }) => {
   const { setPopup } = useContext(PopupContext);
   const keys = data ? Object.keys(data) : [];
-
+  const { query } = useRouter();
+  const id = query.id;
   const handleClose = () => {
     document.body.classList.remove("disable-scroll");
     setPopup(false);
@@ -28,7 +29,7 @@ const Confirm: React.FC<Props> = ({ setConfirm, data }) => {
     e.preventDefault();
     setConfirm(false);
     setPopup(false);
-    postProduct(data);
+    fuctionApi(data, id);
   };
   return (
     <div className="absolute w-full h-full top-0 bg-black-shadow">
