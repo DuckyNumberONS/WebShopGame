@@ -1,9 +1,11 @@
 import { getListProduct } from "@/api/product";
 import { Product } from "@/lib/domain/product";
-import ListSlider from "@/lib/view/components/slider";
-import About from "@/lib/view/components/about";
-import ListItem from "@/lib/view/components/list-items";
 import React, { useEffect, useState } from "react";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import SimpleSlider from "@/lib/view/components/slider";
+import ListItem from "@/lib/view/components/list-items";
+import About from "@/lib/view/components/about";
 
 const HomePage = () => {
   const [product, setProduct] = useState<Product[]>([]);
@@ -18,7 +20,7 @@ const HomePage = () => {
 
   return (
     <>
-      {/* <ListSlider data={product} /> */}
+      <SimpleSlider data={product} />
       <ListItem data={product} category={"game"} />
       <ListItem data={product} category={"study"} />
       <ListItem data={product} category={"entertainment"} />

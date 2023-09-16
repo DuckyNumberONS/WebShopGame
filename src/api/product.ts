@@ -1,10 +1,43 @@
+import { ProductPost } from "@/lib/domain/product";
 import axios from "../utils/index";
 
 export const getListProduct = async () => {
   try {
     const response = await axios.get("/product/getAllProducs");
-    const users = response.data;
-    return users;
+    const producs = response.data;
+    return producs;
+  } catch (error) {
+    console.error(error);
+  }
+};
+export const getItemProduct = async (id: string | string[] | undefined) => {
+  try {
+    const response = await axios.get(`/product/getItemProducs/${id}`);
+    const producs = response.data;
+    return producs;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const updateItemProduct = async (
+  id: string | string[] | undefined,
+  data: ProductPost
+) => {
+  try {
+    const response = await axios.put(`/product/updateProduct/${id}`, data);
+    const producs = response.data;
+    return producs;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const postProduct = async (data: ProductPost) => {
+  try {
+    const response = await axios.post("/product/createProduct/", data);
+    const product = response.data;
+    return product;
   } catch (error) {
     console.error(error);
   }

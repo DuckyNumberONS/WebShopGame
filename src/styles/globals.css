@@ -1,6 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 .disable-scroll {
-    overflow: hidden;
+  overflow: hidden;
+}
+.break-inside {
+  -moz-column-break-inside: avoid;
+  break-inside: avoid;
 }

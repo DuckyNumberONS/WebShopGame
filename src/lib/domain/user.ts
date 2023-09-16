@@ -5,7 +5,6 @@ export interface User {
   admin: boolean;
   createdAt: string;
   updatedAt: string;
-  __v: number;
   password: string;
 }
 export interface UserVerify {
