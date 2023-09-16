@@ -1,4 +1,3 @@
-import { CartItem } from "@/lib/domain/cart";
 import { Product } from "@/lib/domain/product";
 import { CartContext } from "@/lib/hook/Context/cartItem";
 import { LoginContext } from "@/lib/hook/Context/login";

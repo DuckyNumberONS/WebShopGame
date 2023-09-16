@@ -1,17 +1,18 @@
 import Cart from "@/lib/hook/Context/cartItem";
 import Login from "@/lib/hook/Context/login";
+import Popup from "@/lib/hook/Context/popup";
 import Layout from "@/lib/view/components/layout";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <Login>
       <Cart>
         <Layout>
-          <Component {...pageProps} />;
+          <Popup>
+            <Component {...pageProps} />
+          </Popup>
         </Layout>
       </Cart>
     </Login>

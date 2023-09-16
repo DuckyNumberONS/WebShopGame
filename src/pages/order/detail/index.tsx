@@ -2,8 +2,8 @@ import { postOrder } from "@/api/order";
 import { payOrder } from "@/api/payment";
 import { CartContext } from "@/lib/hook/Context/cartItem";
 import { LoginContext } from "@/lib/hook/Context/login";
+import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
-import { PayPalButton } from "react-paypal-button-v2";
 
 const OrderDetails = () => {
   const { cart } = useContext(CartContext);
@@ -16,15 +16,18 @@ const OrderDetails = () => {
     quantity: item.quantity,
     total: item.total,
   }));
-
-  const PaymentOrder = () => {
+  const router = useRouter();
+  const PaymentOrder = async () => {
     const order = {
       username: dataUser?.userFilter.username,
-      products: cartOrder,
+      product: cartOrder,
       totalOrder: totalOrder,
     };
     postOrder(order);
-    // payOrder(order);
+    const res = await payOrder(order);
+    // if (res) {
+    //   router.push(res.hrefSandbox);
+    // }
   };
 
   return (
@@ -109,7 +112,7 @@ const OrderDetails = () => {
             className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600"
             onClick={PaymentOrder}
           >
-            pay
+            Pay
           </button>
         </div>
       </div>
@@ -117,3 +120,6 @@ const OrderDetails = () => {
   );
 };
 export default OrderDetails;
+function userRouter() {
+  throw new Error("Function not implemented.");
+}

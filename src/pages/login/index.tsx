@@ -19,9 +19,12 @@ const Login = () => {
     if (res) {
       if (res.accessToken) {
         setUser(res);
-        alert("login sucess");
-        router.push("/");
         setCheckValue(false);
+        if (res.userFilter.admin) {
+          router.push("/admin");
+        } else {
+          router.push("/");
+        }
       }
     } else {
       setCheckValue(true);
