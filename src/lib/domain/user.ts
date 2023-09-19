@@ -1,10 +1,9 @@
 export interface User {
   _id: string;
   username: string;
+  address: string;
   email: string;
   admin: boolean;
-  createdAt: string;
-  updatedAt: string;
   password: string;
 }
 export interface UserVerify {
