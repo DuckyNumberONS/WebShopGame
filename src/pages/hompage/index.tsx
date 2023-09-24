@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import SimpleSlider from "@/lib/view/components/slider";
 import ListItem from "@/lib/view/components/list-items";
 import About from "@/lib/view/components/about";
+import { category } from "@/lib/config/category";
 
 const HomePage = () => {
   const [product, setProduct] = useState<Product[]>([]);
@@ -21,9 +22,9 @@ const HomePage = () => {
   return (
     <>
       <SimpleSlider data={product} />
-      <ListItem data={product} category={"game"} />
-      <ListItem data={product} category={"study"} />
-      <ListItem data={product} category={"entertainment"} />
+      {category.map((items) => (
+        <ListItem key={items.id} data={product} category={items.title} />
+      ))}
       <About />
     </>
   );

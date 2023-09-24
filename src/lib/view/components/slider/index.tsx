@@ -1,3 +1,4 @@
+import { category } from "@/lib/config/category";
 import { Product } from "@/lib/domain/product";
 import React from "react";
 import Slider from "react-slick";
@@ -30,11 +31,19 @@ const SimpleSlider: React.FC<ListSliderProps> = ({ data }) => {
     <section className="container mx-auto grid grid-cols-6 gap-3">
       <div className="col-span-1">
         <ul className="text-center bg-gray-100 h-full border rounded-md">
-          <li>1</li>
-          <li>2</li>
-          <li>3</li>
-          <li>4</li>
-          <li></li>
+          {category.map((items) => (
+            <li key={items.id}>
+              <a
+                href="#"
+                className="flex items-center p-2 justify-between text-gray-900 rounded-lg hover:bg-gray-300"
+              >
+                <span className="ml-3">
+                  {items.title[0].toUpperCase() + items.title.slice(1)}
+                </span>
+                <img src={items.icon} alt="icon" width={23} height={23} />
+              </a>
+            </li>
+          ))}
         </ul>
       </div>
       <div className="border p-3 col-span-5 rounded-md ">
