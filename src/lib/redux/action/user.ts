@@ -1,7 +1,8 @@
-const setUser = (data) => {
+const setUser = (data: any) => {
   return {
-    type: "setUser",
+    type: "SET_USER",
     payload: data,
   };
 };
+
 export { setUser };

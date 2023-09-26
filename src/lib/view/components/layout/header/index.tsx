@@ -1,14 +1,27 @@
 import { CartContext } from "@/lib/hook/Context/cartItem";
-import { LoginContext } from "@/lib/hook/Context/login";
 import Link from "next/link";
 import React, { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { user } from "@/lib/redux/selector/selector";
+import { setUser } from "@/lib/redux/action/user";
 
 const Header = () => {
   const { cart, setCart } = useContext(CartContext);
-  const { dataUser, setUser } = useContext(LoginContext);
+  const dataUser = useSelector(user);
+  const dispath = useDispatch();
+
   const handleCheckOut = () => {
     localStorage.clear();
-    setUser(null);
+    dispath(
+      setUser({
+        _id: "",
+        username: "",
+        email: "",
+        admin: false,
+        createdAt: "",
+        updatedAt: "",
+      })
+    );
     setCart([]);
   };
   return (
@@ -84,7 +97,7 @@ const Header = () => {
               <circle fill="none" cx="12" cy="7" r="3" />
               <path d="M12 2C9.243 2 7 4.243 7 7s2.243 5 5 5 5-2.243 5-5S14.757 2 12 2zM12 10c-1.654 0-3-1.346-3-3s1.346-3 3-3 3 1.346 3 3S13.654 10 12 10zM21 21v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1h2v-1c0-2.757 2.243-5 5-5h4c2.757 0 5 2.243 5 5v1H21z" />
             </svg>
-            <p>{dataUser?.userFilter.username}</p>
+            <p>{dataUser.username}</p>
           </Link>
 
           <Link
@@ -105,10 +118,10 @@ const Header = () => {
             <p className="text-red-500">({cart.length})</p>
           </Link>
           <div className="pl-3 cursor-pointer font-medium">
-            {dataUser ? (
-              <p onClick={handleCheckOut}>Log out</p>
-            ) : (
+            {dataUser.username == "" ? (
               <Link href={"/login"}>Log in</Link>
+            ) : (
+              <p onClick={handleCheckOut}>Log out</p>
             )}
           </div>
         </div>

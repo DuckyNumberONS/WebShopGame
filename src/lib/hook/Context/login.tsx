@@ -8,10 +8,13 @@ export const LoginContext = createContext<UserContextType>({
 
 const Login = ({ children }: { children?: ReactNode }) => {
   const [dataUser, setUser] = useState<UserVerify | null>(null);
+  const token = dataUser?.accessToken;
+
   useEffect(() => {
-    const token = JSON.stringify(dataUser?.accessToken);
-    localStorage.setItem("token", token ? token : "");
-  });
+    token &&
+      typeof window !== "undefined" &&
+      localStorage.setItem("token", JSON.stringify(token));
+  }, [token]);
 
   return (
     <LoginContext.Provider value={{ dataUser, setUser }}>

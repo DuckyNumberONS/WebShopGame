@@ -1,12 +1,13 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Link from "next/link";
-import { LoginContext } from "@/lib/hook/Context/login";
+import { useSelector } from "react-redux";
+import { user } from "@/lib/redux/selector/selector";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { dataUser } = useContext(LoginContext);
-  const user = dataUser?.userFilter;
+  const dataUser = useSelector(user);
+
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
 
@@ -45,7 +46,7 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            {user?.username}
+            {dataUser?.username}
           </span>
           <span className="block text-xs">UX Designer</span>
         </span>

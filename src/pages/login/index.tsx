@@ -1,24 +1,29 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { PropsLogin } from "@/lib/domain/login";
 import { User } from "@/lib/domain/user";
 import { useForm } from "react-hook-form";
 import { verifyLogin } from "../../api/auth";
-import { LoginContext } from "@/lib/hook/Context/login";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuthToken } from "@/lib/redux/action/auth";
+import { setUser } from "@/lib/redux/action/user";
 
 const Login = () => {
-  const { setUser } = useContext(LoginContext);
   const [checkValue, setCheckValue] = useState(false);
-
+  const dispatch = useDispatch();
   const router = useRouter();
 
   const onSubmit = async (data: PropsLogin) => {
     const res = await verifyLogin(data);
     if (res) {
       if (res.accessToken) {
-        setUser(res);
+        // Cần phải sửa lại thay thế bằng lấy data từ id vì sau này sẽ xóa hết các giá trị trả về từ "auth"
+        // const userId = res.userFilter._id;
+        // getUserById
+        dispatch(setUser(res.userFilter));
+        dispatch(setAuthToken(res.accessToken));
         setCheckValue(false);
         if (res.userFilter.admin) {
           router.push("/admin");

@@ -37,7 +37,7 @@ const SimpleSlider: React.FC<ListSliderProps> = ({ data }) => {
                 href="#"
                 className="flex items-center p-2 justify-between text-gray-900 rounded-lg hover:bg-gray-300"
               >
-                <span className="ml-3">
+                <span>
                   {items.title[0].toUpperCase() + items.title.slice(1)}
                 </span>
                 <img src={items.icon} alt="icon" width={23} height={23} />

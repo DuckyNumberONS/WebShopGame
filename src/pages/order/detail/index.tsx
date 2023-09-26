@@ -1,13 +1,14 @@
 import { postOrder } from "@/api/order";
 import { payOrder } from "@/api/payment";
 import { CartContext } from "@/lib/hook/Context/cartItem";
-import { LoginContext } from "@/lib/hook/Context/login";
+import { user } from "@/lib/redux/selector/selector";
 import { useRouter } from "next/router";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
+import { useSelector } from "react-redux";
 
 const OrderDetails = () => {
   const { cart } = useContext(CartContext);
-  const { dataUser } = useContext(LoginContext);
+  const dataUser = useSelector(user);
   const totalOrder = cart.reduce((total, items) => {
     return total + items.total;
   }, 0);
@@ -19,7 +20,7 @@ const OrderDetails = () => {
   const router = useRouter();
   const PaymentOrder = async () => {
     const order = {
-      username: dataUser?.userFilter.username,
+      username: dataUser.username,
       product: cartOrder,
       totalOrder: totalOrder,
     };
