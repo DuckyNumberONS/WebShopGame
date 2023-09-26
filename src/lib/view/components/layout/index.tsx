@@ -3,15 +3,22 @@ import Footer from "./footer";
 import { useRouter } from "next/router";
 import Header from "./header";
 import DefaultLayout from "./admin";
-import { LoginContext } from "@/lib/hook/Context/login";
-
+import { useSelector } from "react-redux";
+import { auth } from "@/lib/redux/selector/selector";
 interface PropsLayout {
   children?: ReactNode;
 }
 
 const Layout = ({ children }: PropsLayout) => {
-  const { pathname, push } = useRouter();
+  const { pathname } = useRouter();
   const router = pathname.split("/")[1];
+  const token = useSelector(auth);
+
+  useEffect(() => {
+    token &&
+      typeof window !== "undefined" &&
+      localStorage.setItem("token", JSON.stringify(token));
+  }, [token]);
 
   return (
     <>

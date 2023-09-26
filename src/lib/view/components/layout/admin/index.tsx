@@ -1,9 +1,10 @@
-import { ReactNode, useContext, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 // import { Outlet } from "react-router-dom";
 import Sidebar from "../../sidebar";
 import Header from "./header";
-import { LoginContext } from "@/lib/hook/Context/login";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { user } from "@/lib/redux/selector/selector";
 
 interface PropsLayout {
   children?: ReactNode;
@@ -13,13 +14,13 @@ const DefaultLayout = ({ children }: PropsLayout) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { pathname, push } = useRouter();
   const router = pathname.split("/")[1];
-  const { dataUser } = useContext(LoginContext);
+  const dataUser = useSelector(user);
 
-  // useEffect(() => {
-  //   if (router == "admin" && dataUser?.userFilter.admin == undefined) {
-  //     push("/");
-  //   }
-  // });
+  useEffect(() => {
+    if (router == "admin" && dataUser.admin == false) {
+      push("/");
+    }
+  });
 
   return (
     <div className="dark:bg-boxdark-2 dark:text-bodydark">

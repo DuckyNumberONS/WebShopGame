@@ -1,13 +1,14 @@
-import { LoginContext } from "@/lib/hook/Context/login";
 import { useRouter } from "next/router";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { user } from "@/lib/redux/selector/selector";
 
 const UserDetails = () => {
-  const { dataUser } = useContext(LoginContext);
+  const dataUser = useSelector(user);
   const router = useRouter();
 
   useEffect(() => {
-    if (!dataUser?.accessToken) {
+    if (!dataUser?.username) {
       router.push("/login");
     }
   }, [router]);
@@ -57,13 +58,11 @@ const UserDetails = () => {
         </div>
         <div className="mt-20 text-center border-b pb-12">
           <h1 className="text-4xl font-medium text-gray-700">
-            {dataUser?.userFilter.username},{" "}
+            {dataUser.username},{" "}
             <span className="font-light text-gray-500">27</span>
           </h1>
-          <p className="font-light text-gray-600 mt-3">
-            {dataUser?.userFilter.email}
-          </p>
-          <p className="mt-8 text-gray-500">{dataUser?.userFilter.createdAt}</p>
+          <p className="font-light text-gray-600 mt-3">{dataUser.email}</p>
+          <p className="mt-8 text-gray-500">{dataUser.createdAt}</p>
           <p className="mt-2 text-gray-500">University of Computer Science</p>
         </div>
         <div className="mt-12 flex flex-col justify-center">

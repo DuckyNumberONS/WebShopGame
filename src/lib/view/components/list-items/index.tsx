@@ -1,15 +1,16 @@
 import { Product } from "@/lib/domain/product";
 import { CartContext } from "@/lib/hook/Context/cartItem";
-import { LoginContext } from "@/lib/hook/Context/login";
 import { useRouter } from "next/router";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
+import { useSelector } from "react-redux";
+import { user } from "@/lib/redux/selector/selector";
 
 interface PropsListItems {
   data: Array<Product>;
   category: string;
 }
 const ListItem = ({ data, category }: PropsListItems) => {
-  const { dataUser } = useContext(LoginContext);
+  const dataUser = useSelector(user);
   const router = useRouter();
   const { cart, setCart } = useContext(CartContext);
 

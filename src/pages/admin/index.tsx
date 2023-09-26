@@ -1,6 +1,4 @@
-import { LoginContext } from "@/lib/hook/Context/login";
-import { useRouter } from "next/router";
-import React, { useContext, useEffect } from "react";
+import React from "react";
 
 const Admin = () => {
   return (
