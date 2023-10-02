@@ -55,13 +55,13 @@ const Product = () => {
             <p className="font-medium">Price</p>
           </div>
           <div className="col-span-1 flex items-center">
-            <p className="font-medium">Sold</p>
+            <p className="font-medium">Quantity</p>
           </div>
           <div className="col-span-1 flex items-center">
             <p className="font-medium">Profit</p>
           </div>
           <div className="col-span-1 flex items-center">
-            <p className="font-medium">Quantity</p>
+            <p className="font-medium">Time Create</p>
           </div>
           <div className="col-span-1 flex items-center">
             <p className="font-medium">Actions</p>
@@ -94,12 +94,6 @@ const Product = () => {
               </p>
             </div>
             <div className="col-span-1 flex items-center">
-              <p className="text-sm text-black dark:text-white">0</p>
-            </div>
-            <div className="col-span-1 flex items-center">
-              <p className="text-sm text-meta-3">${items.price}</p>
-            </div>
-            <div className="col-span-1 flex items-center">
               <p
                 className={`text-sm ${
                   items.quantity == 0
@@ -108,6 +102,18 @@ const Product = () => {
                 }  `}
               >
                 {items.quantity == 0 ? "Solds" : items.quantity}
+              </p>
+            </div>
+            <div className="col-span-1 flex items-center">
+              <p className="text-sm text-meta-3">${items.price}</p>
+            </div>
+            <div className="col-span-1 flex items-center">
+              <p className="text-sm text-black dark:text-white">
+                <p className="text-sm text-black dark:text-white">
+                  {items.createdAt.substring(12, 19)}
+                  <br />
+                  {items.createdAt.substring(0, 10)}
+                </p>
               </p>
             </div>
             <div className="col-span-1 flex items-center">

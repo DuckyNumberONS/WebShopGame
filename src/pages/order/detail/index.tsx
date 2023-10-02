@@ -1,5 +1,6 @@
 import { postOrder } from "@/api/order";
 import { payOrder } from "@/api/payment";
+import { updateProductQuantity } from "@/api/product";
 import { CartContext } from "@/lib/hook/Context/cartItem";
 import { user } from "@/lib/redux/selector/selector";
 import { useRouter } from "next/router";
@@ -9,23 +10,26 @@ import { useSelector } from "react-redux";
 const OrderDetails = () => {
   const { cart } = useContext(CartContext);
   const dataUser = useSelector(user);
+  const router = useRouter();
   const totalOrder = cart.reduce((total, items) => {
     return total + items.total;
   }, 0);
+
   const cartOrder = cart.map((item) => ({
     id: item._id,
     quantity: item.quantity,
     total: item.total,
   }));
-  const router = useRouter();
+
   const PaymentOrder = async () => {
     const order = {
       username: dataUser.username,
       product: cartOrder,
       totalOrder: totalOrder,
     };
+    updateProductQuantity(cartOrder);
     postOrder(order);
-    const res = await payOrder(order);
+    // const res = await payOrder(order);
     // if (res) {
     //   router.push(res.hrefSandbox);
     // }
@@ -121,6 +125,3 @@ const OrderDetails = () => {
   );
 };
 export default OrderDetails;
-function userRouter() {
-  throw new Error("Function not implemented.");
-}

@@ -118,8 +118,13 @@ const ListItem = ({ data, category }: PropsListItems) => {
                       {items.price} $
                     </p>
                     <button
-                      className="bg-red-600 text-white p-1 rounded-md font-medium hover:bg-red-500"
+                      className={`${
+                        items.quantity == 0
+                          ? "bg-gray-600 hover:bg-gray-500 text-white cursor-not-allowed"
+                          : "bg-red-600 hover:bg-red-500 text-white"
+                      }  p-1 rounded-md font-medium `}
                       onClick={() => handleAddCart(items)}
+                      disabled={items.quantity === 0}
                     >
                       Add to cart
                     </button>

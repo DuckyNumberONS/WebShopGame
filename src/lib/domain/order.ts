@@ -1,8 +1,12 @@
 export interface Order {
+  _id: string;
   username: string;
-  products: ProductOrder[];
+  product: ProductOrder[];
   totalOrder: number;
+  createdAt: string;
+  updatedAt?: string;
 }
+
 export interface ProductOrder {
   id: string;
   quantity: number;

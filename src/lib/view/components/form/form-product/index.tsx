@@ -3,14 +3,15 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { PopupContext } from "@/lib/hook/Context/popup";
 import { Product, ProductPost } from "@/lib/domain/product";
 import Input from "../../input";
-import Confirm from "../../confirm";
 import Select from "../../select";
 import Switcher from "../../switch";
 import { postProduct } from "@/api/product";
+import Confirm from "@/lib/view/components/confirm";
 
 interface PropsDefaultValue {
   defaultValue?: Product;
   fuctionApi: any;
+  className: string;
 }
 
 const Formroduct: React.FC<PropsDefaultValue> = ({
@@ -58,6 +59,8 @@ const Formroduct: React.FC<PropsDefaultValue> = ({
         <>
           {confirm ? (
             <Confirm
+              className="absolute w-full h-full top-0 bg-black-shadow"
+              classPositionBox="top-28"
               fuctionApi={fuctionApi}
               setConfirm={setConfirm}
               data={product}

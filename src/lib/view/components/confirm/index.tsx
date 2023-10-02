@@ -9,9 +9,17 @@ interface Props {
   setConfirm: (value: boolean) => void;
   data: DataObject;
   fuctionApi: (data: DataObject, id?: string | string[] | undefined) => void;
+  className?: string;
+  classPositionBox?: string;
 }
 
-const Confirm: React.FC<Props> = ({ setConfirm, data, fuctionApi }) => {
+const Confirm: React.FC<Props> = ({
+  setConfirm,
+  data,
+  fuctionApi,
+  className,
+  classPositionBox,
+}) => {
   const { setPopup } = useContext(PopupContext);
   const keys = data ? Object.keys(data) : [];
   const { query } = useRouter();
@@ -29,11 +37,15 @@ const Confirm: React.FC<Props> = ({ setConfirm, data, fuctionApi }) => {
     e.preventDefault();
     setConfirm(false);
     setPopup(false);
-    fuctionApi(data, id);
+    if (id) {
+      fuctionApi(data, id);
+    } else {
+      fuctionApi(data);
+    }
   };
   return (
-    <div className="absolute w-full h-full top-0 bg-black-shadow">
-      <div className="w-full max-w-6xl mx-auto relative top-28 ">
+    <div className={className}>
+      <div className={`w-full max-w-6xl mx-auto relative ${classPositionBox}`}>
         <form
           className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
           action="#"
