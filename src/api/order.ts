@@ -11,6 +11,16 @@ export const getOrder = async () => {
   }
 };
 
+export const getOrderById = async (id: string | string[] | undefined) => {
+  try {
+    const response = await axios.get(`/order/getOrder/${id}`);
+    const order = response.data;
+    return order;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const postOrder = async (data: Order) => {
   try {
     const response = await axios.post("/order/createOrder", data);

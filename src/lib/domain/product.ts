@@ -7,6 +7,7 @@ export interface Product {
   price: number;
   quantity: number;
   isHot: boolean;
+  createdAt: string;
 }
 
 export interface ProductPost {

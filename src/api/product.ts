@@ -33,9 +33,19 @@ export const updateItemProduct = async (
   }
 };
 
+export const updateProductQuantity = async (data: any) => {
+  try {
+    const response = await axios.put("/product/updateProductQuantity", data);
+    const product = response.data;
+    return product;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const postProduct = async (data: ProductPost) => {
   try {
-    const response = await axios.post("/product/createProduct/", data);
+    const response = await axios.post("/product/createProduct", data);
     const product = response.data;
     return product;
   } catch (error) {

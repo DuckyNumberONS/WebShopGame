@@ -9,6 +9,7 @@ import { verifyLogin } from "../../api/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthToken } from "@/lib/redux/action/auth";
 import { setUser } from "@/lib/redux/action/user";
+import Link from "next/link";
 
 const Login = () => {
   const [checkValue, setCheckValue] = useState(false);
@@ -163,12 +164,12 @@ const Login = () => {
             </button>
             <p className="text-sm font-light  text-gray-400">
               Don’t have an account yet?{" "}
-              <a
-                href="#"
+              <Link
+                href="/register"
                 className="font-medium text-primary-600 hover:underline text-primary-500"
               >
                 Sign up
-              </a>
+              </Link>
             </p>
           </form>
         </div>

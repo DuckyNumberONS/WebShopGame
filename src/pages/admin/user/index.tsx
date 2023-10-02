@@ -1,25 +1,26 @@
-import { getListProduct, postProduct } from "@/api/product";
+import { postProduct } from "@/api/product";
 import React, { useContext, useEffect, useState } from "react";
-import { Product } from "@/lib/domain/product";
 import { useRouter } from "next/router";
 import { PopupContext } from "@/lib/hook/Context/popup";
 import Formroduct from "@/lib/view/components/form/form-product";
+import { getUser } from "@/api/user";
+import { User } from "@/lib/domain/user";
 
 const User = () => {
   const { push } = useRouter();
-  const [product, setProduct] = useState<Product[]>([]);
+  const [data, setData] = useState<User[]>([]);
   const { popup, setPopup } = useContext(PopupContext);
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await getListProduct();
-      setProduct(res);
+      const res = await getUser();
+      setData(res);
     };
     fetch();
   }, []);
 
   const detailsItems = (id: string | undefined) => {
-    push(`/admin/products/${id}`);
+    push(`/admin/user/${id}`);
   };
 
   const handleAddProduct = () => {
@@ -28,11 +29,11 @@ const User = () => {
 
   return (
     <>
-      <Formroduct fuctionApi={postProduct} />
+      {/* <Formroduct fuctionApi={postProduct} /> */}
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="py-6 px-4 md:px-6 xl:px-7.5 flex justify-between items-center">
           <h4 className="text-xl font-semibold text-black dark:text-white">
-            Products
+            User
           </h4>
           <img
             src="/images/icons/plus.svg"
@@ -46,68 +47,61 @@ const User = () => {
 
         <div className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
           <div className="col-span-2 flex items-center">
-            <p className="font-medium">Product Name</p>
-          </div>
-          <div className="col-span-1 hidden items-center sm:flex">
-            <p className="font-medium">Category</p>
+            <p className="font-medium">ID</p>
           </div>
           <div className="col-span-1 flex items-center">
-            <p className="font-medium">Price</p>
+            <p className="font-medium">User Name</p>
+          </div>
+          <div className="col-span-2 flex items-center">
+            <p className="font-medium">Email</p>
           </div>
           <div className="col-span-1 flex items-center">
-            <p className="font-medium">Sold</p>
+            <p className="font-medium">Role</p>
           </div>
           <div className="col-span-1 flex items-center">
-            <p className="font-medium">Profit</p>
-          </div>
-          <div className="col-span-1 flex items-center">
-            <p className="font-medium">Quantity</p>
+            <p className="font-medium">Time Create</p>
           </div>
           <div className="col-span-1 flex items-center">
             <p className="font-medium">Actions</p>
           </div>
         </div>
 
-        {product.map((items) => (
+        {data.map((items) => (
           <div
             key={items._id}
             className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5"
           >
             <div className="col-span-2 flex items-center">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                <div className="h-full w-15 rounded-md">
-                  <img src={`${items.urlImage}`} alt="Product" />
-                </div>
                 <p className="text-sm text-black dark:text-white">
-                  {items.title.substring(0, 20) + "...."}
+                  {items._id}
                 </p>
               </div>
             </div>
-            <div className="col-span-1 hidden items-center sm:flex">
+            <div className="col-span-1 flex items-center">
               <p className="text-sm text-black dark:text-white">
-                {items.category}
+                {items.username.length > 16
+                  ? items.username.substring(0, 16) + "..."
+                  : items.username}
+              </p>
+            </div>
+            <div className="col-span-2 flex items-center">
+              <p className="text-sm text-black dark:text-white">
+                {items.email}
               </p>
             </div>
             <div className="col-span-1 flex items-center">
+              {items.admin ? (
+                <p className="text-sm text-black dark:text-red-600">Admin</p>
+              ) : (
+                <p className="text-sm text-black dark:text-green-400">Member</p>
+              )}
+            </div>
+            <div className="col-span-1 flex items-center">
               <p className="text-sm text-black dark:text-white">
-                ${items.price}
-              </p>
-            </div>
-            <div className="col-span-1 flex items-center">
-              <p className="text-sm text-black dark:text-white">0</p>
-            </div>
-            <div className="col-span-1 flex items-center">
-              <p className="text-sm text-meta-3">${items.price}</p>
-            </div>
-            <div className="col-span-1 flex items-center">
-              <p
-                className={`text-sm ${
-                  items.quantity == 0
-                    ? "text-red-600"
-                    : "text-black dark:text-white"
-                }  `}
-              >
-                {items.quantity == 0 ? "Solds" : items.quantity}
+                {items.createdAt.substring(12, 19)}
+                <br />
+                {items.createdAt.substring(0, 10)}
               </p>
             </div>
             <div className="col-span-1 flex items-center">

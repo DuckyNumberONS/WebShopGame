@@ -1,6 +1,8 @@
 const INITIAL_STATE = {
   _id: "",
   username: "",
+  urlavatar: "",
+  address: "",
   email: "",
   admin: false,
   createdAt: "",

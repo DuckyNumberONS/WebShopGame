@@ -1,5 +1,6 @@
-import { getItemProduct, updateItemProduct } from "@/api/product";
+import { getUserById } from "@/api/user";
 import { Product } from "@/lib/domain/product";
+import { User } from "@/lib/domain/user";
 import { PopupContext } from "@/lib/hook/Context/popup";
 // import EditButton from "@/lib/view/components/edit-button";
 import Formroduct from "@/lib/view/components/form/form-product";
@@ -8,7 +9,7 @@ import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 
 const Details = () => {
-  const [items, setItems] = useState<Product>();
+  const [items, setItems] = useState<User>();
   const [loading, setLoading] = useState(true);
   const { popup, setPopup } = useContext(PopupContext);
   const { query } = useRouter();
@@ -20,7 +21,7 @@ const Details = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await getItemProduct(id);
+      const res = await getUserById(id);
       setItems(res);
       setLoading(false);
     };
@@ -29,10 +30,10 @@ const Details = () => {
 
   return (
     <section className="text-gray-700 body-font overflow-hidden dark:bg-boxdark bg-white">
-      <Formroduct fuctionApi={updateItemProduct} defaultValue={items} />
+      {/* <Formroduct fuctionApi={updateItemProduct} defaultValue={items} /> */}
       <div className="container px-5 pt-5 pb-15 mx-auto">
         <button className="pb-4">
-          <Link href="/admin/products">
+          <Link href="/admin/user">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -45,166 +46,80 @@ const Details = () => {
             </svg>
           </Link>
         </button>
-        <div className="mx-auto flex flex-wrap">
-          {loading ? (
-            <img
-              alt="ecommerce"
-              className="h-[505px] w-full"
-              src={"/images/icons/no-images.svg"}
-            />
-          ) : (
-            <img
-              alt="ecommerce"
-              className="w-full object-cover object-center rounded border border-gray-200"
-              src={items?.urlImage}
-            />
-          )}
-
-          <div className="w-full lg:py-6 mt-6 lg:mt-0">
-            <div className="flex items-center gap-4">
-              <h1 className="text-gray-900 dark:text-gray-50 text-3xl title-font font-medium mb-1">
-                {items?.title}
+        <div className="p-16">
+          <div className="p-8 bg-white shadow mt-24">
+            <div className="grid grid-cols-1 md:grid-cols-3">
+              <div className="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
+                {/* <div>
+              <p className="font-bold text-gray-700 text-xl">22</p>
+              <p className="text-gray-400">Friends</p>
+            </div>
+            <div>
+              <p className="font-bold text-gray-700 text-xl">10</p>
+              <p className="text-gray-400">Photos</p>
+            </div>
+            <div>
+              <p className="font-bold text-gray-700 text-xl">89</p>
+              <p className="text-gray-400">Comments</p>
+            </div> */}
+              </div>
+              <div className="relative">
+                <div className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
+                  {items?.urlavatar ? (
+                    <img src={items?.urlavatar} alt="Avatar" />
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-24 w-24"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  )}
+                </div>
+              </div>
+              <div className="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
+                <button className="text-white py-2 px-4 uppercase rounded bg-blue-400 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
+                  Connect
+                </button>
+                <button className="text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
+                  Message
+                </button>
+              </div>
+            </div>
+            <div className="mt-20 text-center border-b pb-12">
+              <h1 className="text-4xl font-medium text-gray-700">
+                {items?.username}{" "}
+                {items?.admin ? (
+                  <span className="text-red-600">(Admin)</span>
+                ) : (
+                  <span className="text-green-600">(Member)</span>
+                )}
               </h1>
+              <p className="font-light text-gray-600 mt-3">{items?.email}</p>
+              <p className="text-gray-500">
+                {items?.createdAt.substring(12, 19)}
+                <br />
+                {items?.createdAt.substring(0, 10)}
+              </p>
+              <p className="mt-2 text-gray-500">{items?.address}</p>
             </div>
-            <h2 className="text-sm title-font text-gray-500 dark:text-white tracking-widest">
-              Category : {items?.category}
-            </h2>
-            <h2 className="text-sm title-font text-gray-500 dark:text-white tracking-widest">
-              Status :{" "}
-              {items?.quantity == 0 ? (
-                <span className="text-red-600"> SOLD</span>
-              ) : (
-                <span className="text-green-500">
-                  Stocking ({items?.quantity})
-                </span>
-              )}
-            </h2>
-            <div className="flex mb-4">
-              <span className="flex items-center">
-                <svg
-                  fill="currentColor"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  className="w-4 h-4 text-red-500"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                </svg>
-                <svg
-                  fill="currentColor"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  className="w-4 h-4 text-red-500"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                </svg>
-                <svg
-                  fill="currentColor"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  className="w-4 h-4 text-red-500"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                </svg>
-                <svg
-                  fill="currentColor"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  className="w-4 h-4 text-red-500"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                </svg>
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  className="w-4 h-4 text-red-500"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                </svg>
-                <span className="text-gray-600 ml-3 dark:text-gray-400">
-                  4 Reviews
-                </span>
-              </span>
-              <span className="flex ml-3 pl-3 py-2 border-l-2 border-gray-200">
-                <a className="text-gray-500">
-                  <svg
-                    fill="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    className="w-5 h-5"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
-                  </svg>
-                </a>
-                <a className="ml-2 text-gray-500">
-                  <svg
-                    fill="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    className="w-5 h-5"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
-                  </svg>
-                </a>
-                <a className="ml-2 text-gray-500">
-                  <svg
-                    fill="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    className="w-5 h-5"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path>
-                  </svg>
-                </a>
-              </span>
-            </div>
-            <p className="leading-relaxed dark:text-gray-200">
-              {items?.description}
-            </p>
-            <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
-              <div className="flex">
-                {/* <span className="mr-3">Color</span>
-                <button className="border-2 border-gray-300 rounded-full w-6 h-6 focus:outline-none"></button>
-                <button className="border-2 border-gray-300 ml-1 bg-gray-700 rounded-full w-6 h-6 focus:outline-none"></button>
-                <button className="border-2 border-gray-300 ml-1 bg-red-500 rounded-full w-6 h-6 focus:outline-none"></button> */}
-              </div>
-            </div>
-            <div className="flex justify-between">
-              <span className="title-font font-medium text-2xl text-gray-900 dark:text-gray-300">
-                ${items?.quantity}
-              </span>
-              <div className="flex">
-                <button
-                  className="mr-3 flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded"
-                  onClick={handleClick}
-                >
-                  Edit
-                </button>
-                <button className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
-                  Delete
-                </button>
-              </div>
+            <div className="mt-12 flex flex-col justify-center">
+              <p className="text-gray-600 text-center font-light lg:px-16">
+                An artist of considerable range, Ryan — the name taken by
+                Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs
+                and records all of his own music, giving it a warm, intimate
+                feel with a solid groove structure. An artist of considerable
+                range.
+              </p>
+              <button className="text-indigo-500 py-2 px-4  font-medium mt-4">
+                Show more
+              </button>
             </div>
           </div>
         </div>
