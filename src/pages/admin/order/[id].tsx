@@ -2,7 +2,7 @@ import { getOrderById } from "@/api/order";
 import { getItemProduct } from "@/api/product";
 import { Order } from "@/lib/domain/order";
 import { PopupContext } from "@/lib/hook/Context/popup";
-import Row from "@/lib/view/components/table";
+import Row from "@/lib/view/components/row";
 // import EditButton from "@/lib/view/components/edit-button";
 // import Formroduct from "@/lib/view/components/form/form-product";
 import Link from "next/link";
