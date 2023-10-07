@@ -1,3 +1,5 @@
+import { Product } from "@/lib/domain/product";
+import { User } from "@/lib/domain/user";
 import { PopupContext } from "@/lib/hook/Context/popup";
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
@@ -8,7 +10,10 @@ interface DataObject {
 interface Props {
   setConfirm: (value: boolean) => void;
   data: DataObject;
-  fuctionApi: (data: DataObject, id?: string | string[] | undefined) => void;
+  fuctionApi: (
+    data: any,
+    id?: string | string[]
+  ) => Promise<Product[] | User[]>;
   className?: string;
   classPositionBox?: string;
 }
@@ -85,9 +90,18 @@ const Confirm: React.FC<Props> = ({
                   <img src={data[items]} alt={items} width={300} height={200} />
                 </>
               ) : (
-                <h2 className="block text-gray-700 text-sm font-bold mb-2">
-                  {items[0].toLocaleUpperCase() + items.slice(1)}: {data[items]}
-                </h2>
+                <div className="flex gap-3">
+                  <h2 className="block text-gray-700 text-sm font-bold mb-2">
+                    {items[0].toLocaleUpperCase() + items.slice(1)}:
+                  </h2>
+                  {typeof data[items] == "boolean" ? (
+                    <span className="text-gray-500">
+                      {data[items] ? "Yes" : "No"}
+                    </span>
+                  ) : (
+                    <span className="text-gray-500">{data[items]}</span>
+                  )}
+                </div>
               )}
             </div>
           ))}

@@ -1,20 +1,9 @@
 import { getOrder } from "@/api/order";
-import React, { useEffect, useState } from "react";
-import { Order } from "@/lib/domain/order";
+import React from "react";
 import Table from "@/lib/view/components/table";
 import { Columns } from "@/lib/view/components/table/table";
 
-const Order = () => {
-  const [data, setData] = useState<Order[]>([]);
-
-  useEffect(() => {
-    const fetch = async () => {
-      const res = await getOrder();
-      setData(res);
-    };
-    fetch();
-  }, []);
-
+const OrderList = () => {
   const columns: Columns[] = [
     {
       title: "Order Id",
@@ -74,14 +63,15 @@ const Order = () => {
 
   return (
     <>
-      {/* <Formroduct fuctionApi={postProduct} /> */}
       <Table
+        fuctionApi={getOrder}
         title="Order"
         columns={columns}
-        data={data}
         linkDetails="/admin/order/"
+        classCols="grid-cols-7"
+        plus={false}
       />
     </>
   );
 };
-export default Order;
+export default OrderList;

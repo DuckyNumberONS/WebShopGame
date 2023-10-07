@@ -2,7 +2,7 @@ import { getItemProduct, updateItemProduct } from "@/api/product";
 import { Product } from "@/lib/domain/product";
 import { PopupContext } from "@/lib/hook/Context/popup";
 // import EditButton from "@/lib/view/components/edit-button";
-import Formroduct from "@/lib/view/components/form/form-product";
+// import Formroduct from "@/lib/view/components/form/form-product";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
@@ -29,7 +29,7 @@ const Details = () => {
 
   return (
     <section className="text-gray-700 body-font overflow-hidden dark:bg-boxdark bg-white">
-      <Formroduct fuctionApi={updateItemProduct} defaultValue={items} />
+      {/* <Formroduct fuctionApi={updateItemProduct} defaultValue={items} /> */}
       <div className="container px-5 pt-5 pb-15 mx-auto">
         <button className="pb-4">
           <Link href="/admin/products">

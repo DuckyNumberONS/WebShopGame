@@ -10,7 +10,7 @@ export const getUser = async () => {
     console.error(error);
   }
 };
-export const getUserById = async (id: string) => {
+export const getUserById = async (id: string | string[] | undefined) => {
   try {
     const response = await axios.get(`/user/getUser/${id}`);
     const users = response.data;

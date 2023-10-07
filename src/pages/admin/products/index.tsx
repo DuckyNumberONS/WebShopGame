@@ -1,29 +1,14 @@
 import { getListProduct, postProduct } from "@/api/product";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Product } from "@/lib/domain/product";
-import { useRouter } from "next/router";
-import { PopupContext } from "@/lib/hook/Context/popup";
-import Formroduct from "@/lib/view/components/form/form-product";
 import Table from "@/lib/view/components/table";
 import { Columns } from "@/lib/view/components/table/table";
+import Form from "@/lib/view/components/form";
+import Input from "@/lib/view/components/input";
+import Select from "@/lib/view/components/select";
+import Switcher from "@/lib/view/components/switch";
 
-const Product = () => {
-  const { push } = useRouter();
-  const [data, setData] = useState<Product[]>([]);
-  const { popup, setPopup } = useContext(PopupContext);
-
-  useEffect(() => {
-    const fetch = async () => {
-      const res = await getListProduct();
-      setData(res);
-    };
-    fetch();
-  }, []);
-
-  const handleAddProduct = () => {
-    setPopup(true);
-  };
-
+const ProductList = () => {
   const columns: Columns[] = [
     {
       title: "Product Name",
@@ -84,16 +69,163 @@ const Product = () => {
     },
   ];
 
+  const options = [
+    {
+      value: "game",
+      text: "Game",
+    },
+    {
+      value: "study",
+      text: "Study",
+    },
+    {
+      value: "entertainment",
+      text: "Entertainment",
+    },
+  ];
+
   return (
     <>
-      {/* <Formroduct fuctionApi={postProduct} /> */}
+      <Form fuctionApi={postProduct} className="">
+        {(props: any) => (
+          <>
+            <div className="mb-4">
+              <Input
+                label="Tile"
+                name="title"
+                type="text"
+                register={props.registers}
+                errors={props.error}
+                placeholder="Title"
+                errorsOption={{
+                  required: { value: true, message: "Title is empty" },
+                  maxLength: {
+                    value: 250,
+                    message: "Title cannot exceed 50 characters",
+                  },
+                  minLength: {
+                    value: 5,
+                    message: "Password must not be less than 6 characters",
+                  },
+                }}
+                classLabel="block text-gray-700 text-sm font-bold mb-2"
+                classInput="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+            <div className="mb-4">
+              <Input
+                label="Description"
+                name="description"
+                type="text"
+                register={props.registers}
+                errors={props.error}
+                placeholder="Description"
+                errorsOption={{
+                  required: {
+                    value: true,
+                    message: "Description is empty",
+                  },
+                  maxLength: {
+                    value: 500,
+                    message: "Description cannot exceed 500 characters",
+                  },
+                  minLength: {
+                    value: 5,
+                    message: "Password must not be less than 6 characters",
+                  },
+                }}
+                classLabel="block text-gray-700 text-sm font-bold mb-2"
+                classInput="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+            <div className="mb-4">
+              <Input
+                label="Price"
+                name="price"
+                type="number"
+                register={props.registers}
+                errors={props.error}
+                placeholder="Price"
+                errorsOption={{
+                  required: { value: true, message: "Price is empty" },
+                }}
+                classLabel="block text-gray-700 text-sm font-bold mb-2"
+                classInput="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+            <div className="mb-4">
+              <Input
+                label="Quantity"
+                name="quantity"
+                type="number"
+                register={props.registers}
+                errors={props.error}
+                placeholder="Quantity"
+                errorsOption={{
+                  required: { value: true, message: "Quantity is empty" },
+                }}
+                classLabel="block text-gray-700 text-sm font-bold mb-2"
+                classInput="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+            <div className="mb-4">
+              <Input
+                label="UrlImage"
+                name="urlImage"
+                type="text"
+                register={props.registers}
+                errors={props.error}
+                placeholder="UrlImage"
+                errorsOption={{
+                  required: { value: true, message: "UrlImage is empty" },
+                  maxLength: {
+                    value: 250,
+                    message: "Title cannot exceed 50 characters",
+                  },
+                  minLength: {
+                    value: 5,
+                    message: "Password must not be less than 6 characters",
+                  },
+                }}
+                classLabel="block text-gray-700 text-sm font-bold mb-2"
+                classInput="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+            <div className="mb-4">
+              <Select
+                label="Category"
+                name="category"
+                register={props.registers}
+                errors={props.error}
+                textSelect="Choose category"
+                errorsOption={{
+                  required: { value: true, message: "Category is empty" },
+                }}
+                classLabel="block text-gray-700 text-sm font-bold mb-2"
+                classSelect="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                options={options}
+              />
+            </div>
+            <div className="mb-4">
+              <Switcher
+                name="isHot"
+                register={props.registers}
+                errors={props.error}
+                label="Best seller"
+                classLabel="block text-gray-700 text-sm font-bold mb-2"
+              />
+            </div>
+          </>
+        )}
+      </Form>
       <Table
         title="Products"
         columns={columns}
-        data={data}
-        linkDetails="/admin/products/"
+        fuctionApi={getListProduct}
+        linkDetails="/admin/products"
+        classCols="grid-cols-7"
       />
     </>
   );
 };
-export default Product;
+export default ProductList;
