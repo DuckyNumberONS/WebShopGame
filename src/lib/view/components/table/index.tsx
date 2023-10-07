@@ -1,28 +1,80 @@
-import { User } from "@/lib/domain/user";
 import { Product } from "@/lib/domain/product";
-import { Order } from "@/lib/domain/order";
-
-import React from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { Columns } from "./table";
-
+import { PopupContext } from "@/lib/hook/Context/popup";
+import { Order } from "@/lib/domain/order";
+import { User } from "@/lib/domain/user";
 interface Props {
   title: string;
   columns: Columns[];
-  data: Array<User | Product | Order>;
+  fuctionApi: () => Promise<Product[] | Order[] | User[]>;
   linkDetails?: string | undefined;
+  classCols?: string;
+  plus?: boolean;
 }
 
-const Table: React.FC<Props> = ({ title, columns, data, linkDetails }) => {
+const Table: React.FC<Props> = ({
+  title,
+  columns,
+  fuctionApi,
+  linkDetails,
+  classCols = "grid-cols-6",
+  plus = true,
+}) => {
+  const { setPopup } = useContext(PopupContext);
+  const [data, setData] = useState<Product[] | Order[] | User[]>([]);
+  const [refresh, setRefresh] = useState(false);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const res = await fuctionApi();
+      setData(res);
+    };
+    fetch();
+  }, [refresh]);
+
+  const handleAdd = () => {
+    setPopup(true);
+  };
+  const handleRefresh = useCallback(() => {
+    console.log("Refresh");
+    setRefresh(!refresh);
+  }, []);
+
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="py-6 px-4 md:px-6 xl:px-7.5 flex justify-between items-center">
         <h4 className="text-xl font-semibold text-black dark:text-white">
           {title}
         </h4>
+        <div className="flex gap-2">
+          <button className="bg-white rounded-xl hover:bg-gray-400">
+            <img
+              src="/images/icons/refresh.svg"
+              alt="plus"
+              width={23}
+              height={23}
+              className="cursor-pointer"
+              onClick={handleRefresh}
+            />
+          </button>
+          {plus && (
+            <img
+              src="/images/icons/plus.svg"
+              alt="plus"
+              width={25}
+              height={25}
+              className="cursor-pointer"
+              onClick={handleAdd}
+            />
+          )}
+        </div>
       </div>
 
-      <div className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
+      <div
+        className={`grid ${classCols} border-t border-stroke py-4.5 px-4 dark:border-strokedark md:px-6 2xl:px-7.5`}
+      >
         {columns.map((column, index) => (
           <div
             key={index}
@@ -39,7 +91,7 @@ const Table: React.FC<Props> = ({ title, columns, data, linkDetails }) => {
       {data.map((items) => (
         <div
           key={items._id}
-          className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5"
+          className={`grid ${classCols} border-t border-stroke py-4.5 px-4 dark:border-strokedark md:px-6 2xl:px-7.5`}
         >
           {columns.map((col, index) => (
             <div
@@ -57,10 +109,7 @@ const Table: React.FC<Props> = ({ title, columns, data, linkDetails }) => {
           <div className="col-span-1 flex items-center">
             <div className="flex items-center space-x-3.5">
               <Link href={`${linkDetails + "/" + items._id}`}>
-                <button
-                  className="hover:text-primary"
-                  // onClick={() => detailsItems(items._id)}
-                >
+                <button className="hover:text-primary">
                   <svg
                     className="fill-current"
                     width="18"
