@@ -1,15 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { user } from "@/lib/redux/selector/selector";
+import { CartContext } from "@/lib/hook/Context/cartItem";
+import { setUser } from "@/lib/redux/action/user";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dataUser = useSelector(user);
-
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
+  const { cart, setCart } = useContext(CartContext);
+  const dispath = useDispatch();
 
   // close on click outside
   useEffect(() => {
@@ -35,6 +38,21 @@ const DropdownUser = () => {
     document.addEventListener("keydown", keyHandler);
     return () => document.removeEventListener("keydown", keyHandler);
   });
+
+  const handleCheckOut = () => {
+    localStorage.clear();
+    dispath(
+      setUser({
+        _id: "",
+        username: "",
+        email: "",
+        admin: false,
+        createdAt: "",
+        updatedAt: "",
+      })
+    );
+    setCart([]);
+  };
 
   return (
     <div className="relative">
@@ -81,7 +99,6 @@ const DropdownUser = () => {
         </svg>
       </Link>
 
-      {/* <!-- Dropdown Start --> */}
       <div
         ref={dropdown}
         onFocus={() => setDropdownOpen(true)}
@@ -181,7 +198,7 @@ const DropdownUser = () => {
               fill=""
             />
           </svg>
-          Log Out
+          <p onClick={handleCheckOut}>Log out</p>
         </button>
       </div>
       {/* <!-- Dropdown End --> */}
