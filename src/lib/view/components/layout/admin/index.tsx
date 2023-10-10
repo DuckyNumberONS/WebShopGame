@@ -1,10 +1,11 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useContext, useEffect, useState } from "react";
 // import { Outlet } from "react-router-dom";
 import Sidebar from "../../sidebar";
 import Header from "./header";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { user } from "@/lib/redux/selector/selector";
+import { PopupContext } from "@/lib/hook/Context/popup";
 
 interface PropsLayout {
   children?: ReactNode;
@@ -15,6 +16,7 @@ const DefaultLayout = ({ children }: PropsLayout) => {
   const { pathname, push } = useRouter();
   const router = pathname.split("/")[1];
   const dataUser = useSelector(user);
+  const { popup } = useContext(PopupContext);
 
   useEffect(() => {
     if (router == "admin" && dataUser.admin == false) {
@@ -37,7 +39,7 @@ const DefaultLayout = ({ children }: PropsLayout) => {
           {/* <!-- ===== Header End ===== --> */}
 
           {/* <!-- ===== Main Content Start ===== --> */}
-          <main>
+          <main className={`${popup ? "disable-scroll" : ""}`}>
             <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
               {children}
             </div>

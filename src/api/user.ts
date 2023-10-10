@@ -29,3 +29,13 @@ export const postUser = async (data: User) => {
     console.error(error);
   }
 };
+
+export const deleteUser = async (id: string) => {
+  try {
+    const response = await axios.delete(`/user/deleteUser/${id}`);
+    const users = response.data;
+    return users;
+  } catch (error) {
+    console.error(error);
+  }
+};
