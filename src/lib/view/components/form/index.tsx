@@ -28,7 +28,6 @@ const Form: React.FC<PropsDefaultValue> = ({ fuctionApi, children }) => {
   };
 
   const handleClose = () => {
-    document.body.classList.remove("disable-scroll");
     setPopup(false);
   };
 

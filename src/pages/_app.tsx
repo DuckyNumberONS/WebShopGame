@@ -10,11 +10,11 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <Cart>
-        <Layout>
-          <Popup>
+        <Popup>
+          <Layout>
             <Component {...pageProps} />
-          </Popup>
-        </Layout>
+          </Layout>
+        </Popup>
       </Cart>
     </Provider>
   );

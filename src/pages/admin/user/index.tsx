@@ -1,5 +1,5 @@
 import React from "react";
-import { getUser, postUser } from "@/api/user";
+import { deleteUser, getUser, postUser } from "@/api/user";
 import Table from "@/lib/view/components/table";
 import { Columns } from "@/lib/view/components/table/table";
 import Switcher from "@/lib/view/components/switch";
@@ -197,6 +197,7 @@ const UserList = () => {
         )}
       </Form>
       <Table
+        deleteApi={deleteUser}
         title="User"
         columns={columns}
         fuctionApi={getUser}

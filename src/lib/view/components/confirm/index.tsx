@@ -29,8 +29,8 @@ const Confirm: React.FC<Props> = ({
   const keys = data ? Object.keys(data) : [];
   const { query } = useRouter();
   const id = query.id;
+
   const handleClose = () => {
-    document.body.classList.remove("disable-scroll");
     setPopup(false);
   };
 
@@ -38,16 +38,17 @@ const Confirm: React.FC<Props> = ({
     setConfirm(false);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setConfirm(false);
     setPopup(false);
     if (id) {
-      fuctionApi(data, id);
+      await fuctionApi(data, id);
     } else {
-      fuctionApi(data);
+      await fuctionApi(data);
     }
   };
+
   return (
     <div className={className}>
       <div className={`w-full max-w-6xl mx-auto relative ${classPositionBox}`}>

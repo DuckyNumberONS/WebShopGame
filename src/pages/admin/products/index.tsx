@@ -1,6 +1,5 @@
-import { getListProduct, postProduct } from "@/api/product";
-import React, { useEffect, useState } from "react";
-import { Product } from "@/lib/domain/product";
+import { deleteProduct, getListProduct, postProduct } from "@/api/product";
+import React from "react";
 import Table from "@/lib/view/components/table";
 import { Columns } from "@/lib/view/components/table/table";
 import Form from "@/lib/view/components/form";
@@ -219,6 +218,7 @@ const ProductList = () => {
         )}
       </Form>
       <Table
+        deleteApi={deleteProduct}
         title="Products"
         columns={columns}
         fuctionApi={getListProduct}

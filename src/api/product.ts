@@ -10,6 +10,7 @@ export const getListProduct = async () => {
     console.error(error);
   }
 };
+
 export const getItemProduct = async (id: string | string[] | undefined) => {
   try {
     const response = await axios.get(`/product/getItemProducs/${id}`);
@@ -46,6 +47,16 @@ export const updateProductQuantity = async (data: any) => {
 export const postProduct = async (data: ProductPost) => {
   try {
     const response = await axios.post("/product/createProduct", data);
+    const product = response.data;
+    return product;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const deleteProduct = async (id: string) => {
+  try {
+    const response = await axios.delete(`/product/deleteProduct/${id}`);
     const product = response.data;
     return product;
   } catch (error) {
