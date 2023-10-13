@@ -13,7 +13,7 @@ const UserList = () => {
       span: 2,
       render: (items) => (
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-          <p className="text-sm text-black dark:text-white">{items._id}</p>
+          <p className="text-sm text-black">{items._id}</p>
         </div>
       ),
     },
@@ -21,7 +21,7 @@ const UserList = () => {
       title: "User Name",
       span: 1,
       render: (items) => (
-        <p className="text-sm text-black dark:text-white">
+        <p className="text-sm text-black">
           {items.username.length > 16
             ? items.username.substring(0, 16) + "..."
             : items.username}
@@ -31,9 +31,7 @@ const UserList = () => {
     {
       title: "Email",
       span: 2,
-      render: (items) => (
-        <p className="text-sm text-black dark:text-white">{items.email}</p>
-      ),
+      render: (items) => <p className="text-sm text-black">{items.email}</p>,
     },
     {
       title: "Role",
@@ -52,7 +50,7 @@ const UserList = () => {
       title: "Time Create",
       span: 1,
       render: (items) => (
-        <p className="text-sm text-black dark:text-white">
+        <p className="text-sm text-black">
           {items.createdAt.substring(12, 19)}
           <br />
           {items.createdAt.substring(0, 10)}

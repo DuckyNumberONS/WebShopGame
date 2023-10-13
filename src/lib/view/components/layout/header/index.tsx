@@ -88,7 +88,7 @@ const Header = () => {
 
         <div className="order-2 md:order-3 flex items-center" id="nav-content">
           <Link
-            href={"/order/detail"}
+            href={"/cart/detail"}
             className="pl-3 no-underline hover:text-black flex cursor-pointer"
           >
             <svg
@@ -154,11 +154,7 @@ const Header = () => {
                         </Link>
                       </li>
                     )}
-                    <li>
-                      <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-                        Dashboard
-                      </a>
-                    </li>
+
                     <li>
                       <Link
                         href="/user/details"
@@ -169,16 +165,11 @@ const Header = () => {
                     </li>
                     <li>
                       <Link
-                        href="/user/details"
+                        href="/order"
                         className="block px-4 py-2 hover:bg-gray-100"
                       >
                         My Order
                       </Link>
-                    </li>
-                    <li>
-                      <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-                        Settings
-                      </a>
                     </li>
                   </ul>
                   <div className="py-2" onClick={handleCheckOut}>

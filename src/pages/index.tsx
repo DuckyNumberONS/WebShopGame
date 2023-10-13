@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
-    <main className="bg-white py-8">
+    <main className="bg-[#f3f4f6] py-8">
       <HomePage />
     </main>
   );
