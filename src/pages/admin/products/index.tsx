@@ -17,7 +17,7 @@ const ProductList = () => {
           <div className="h-full w-15 rounded-md">
             <img src={`${items.urlImage}`} alt="Product" />
           </div>
-          <p className="text-sm text-black dark:text-white">
+          <p className="text-sm text-black ">
             {items.title.substring(0, 20) + "...."}
           </p>
         </div>
@@ -27,15 +27,13 @@ const ProductList = () => {
       title: "Category",
       span: 1,
       render: (items) => (
-        <p className="text-sm text-black dark:text-white">{items.category}</p>
+        <p className="text-sm text-black ">{items.category}</p>
       ),
     },
     {
       title: "Price",
       span: 1,
-      render: (items) => (
-        <p className="text-sm text-black dark:text-white">${items.price}</p>
-      ),
+      render: (items) => <p className="text-sm text-black ">${items.price}</p>,
     },
     {
       title: "Quantity",
@@ -43,7 +41,7 @@ const ProductList = () => {
       render: (items) => (
         <p
           className={`text-sm ${
-            items.quantity == 0 ? "text-red-600" : "text-black dark:text-white"
+            items.quantity == 0 ? "text-red-600" : "text-black "
           }  `}
         >
           {items.quantity == 0 ? "Solds" : items.quantity}
@@ -59,7 +57,7 @@ const ProductList = () => {
       title: "Time Create",
       span: 1,
       render: (items) => (
-        <p className="text-sm text-black dark:text-white">
+        <p className="text-sm text-black ">
           {items.createdAt.substring(12, 19)}
           <br />
           {items.createdAt.substring(0, 10)}
@@ -223,7 +221,6 @@ const ProductList = () => {
         columns={columns}
         fuctionApi={getListProduct}
         linkDetails="/admin/products"
-        classCols="grid-cols-7"
       />
     </>
   );

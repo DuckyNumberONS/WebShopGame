@@ -9,34 +9,26 @@ const OrderList = () => {
       title: "Order Id",
       span: 2,
       render: (items) => (
-        <p className="text-sm text-black dark:text-white">
-          {items._id.substring(10)}
-        </p>
+        <p className="text-sm text-black ">{items._id.substring(0, 10)}</p>
       ),
     },
     {
       title: "User Id",
       span: 1,
       render: (items) => (
-        <p className="text-sm text-black dark:text-white">
-          {items.username.substring(12)}
-        </p>
+        <p className="text-sm text-black ">{items.username.substring(12)}</p>
       ),
     },
     {
       title: "Status",
       span: 1,
-      render: (items) => (
-        <p className="text-sm text-black dark:text-white">pending</p>
-      ),
+      render: (items) => <p className="text-sm text-black ">pending</p>,
     },
     {
       title: "Quantity",
       span: 1,
       render: (items) => (
-        <p className="text-sm text-black dark:text-white">
-          {items.product.length}
-        </p>
+        <p className="text-sm text-black ">{items.product.length}</p>
       ),
     },
     {
@@ -50,8 +42,8 @@ const OrderList = () => {
       title: "Time Create",
       span: 1,
       render: (items) => (
-        <p className="text-sm text-black dark:text-white">
-          <p className="text-sm text-black dark:text-white">
+        <p className="text-sm text-black ">
+          <p className="text-sm text-black ">
             {items.createdAt.substring(12, 19)}
             <br />
             {items.createdAt.substring(0, 10)}
@@ -68,7 +60,6 @@ const OrderList = () => {
         title="Order"
         columns={columns}
         linkDetails="/admin/order/"
-        classCols="grid-cols-7"
         plus={false}
       />
     </>

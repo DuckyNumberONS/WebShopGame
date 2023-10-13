@@ -30,7 +30,7 @@ const SimpleSlider: React.FC<ListSliderProps> = ({ data }) => {
   return (
     <section className="container mx-auto grid grid-cols-6 gap-3">
       <div className="col-span-1">
-        <ul className="text-center bg-gray-100 h-full border rounded-md">
+        <ul className="text-center bg-white h-full border rounded-md">
           {category.map((items) => (
             <li key={items.id}>
               <a
@@ -46,8 +46,8 @@ const SimpleSlider: React.FC<ListSliderProps> = ({ data }) => {
           ))}
         </ul>
       </div>
-      <div className="border p-3 col-span-5 rounded-md ">
-        <div className="bg-gray-100">
+      <div className="border p-3 col-span-5 rounded-md bg-white">
+        <div>
           <Slider {...settingsSliderMain}>
             {dataProductIsHot.map((items) => (
               <div key={items._id}>
@@ -57,7 +57,7 @@ const SimpleSlider: React.FC<ListSliderProps> = ({ data }) => {
           </Slider>
         </div>
       </div>
-      <div className="bg-gray-100 col-span-6 border rounded-md p-3">
+      <div className="bg-white col-span-6 border rounded-md p-3">
         <Slider {...settingsSlierBar}>
           {dataProductIsHot.map((items) => (
             <div key={items._id}>

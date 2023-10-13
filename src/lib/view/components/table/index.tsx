@@ -6,9 +6,10 @@ import { PopupContext } from "@/lib/hook/Context/popup";
 import { Order } from "@/lib/domain/order";
 import { User } from "@/lib/domain/user";
 interface Props {
+  id?: string;
   title: string;
   columns: Columns[];
-  fuctionApi: () => Promise<Product[] | Order[] | User[]>;
+  fuctionApi: (id?: string) => Promise<Product[] | Order[] | User[]>;
   linkDetails?: string | undefined;
   classCols?: string;
   plus?: boolean;
@@ -17,11 +18,12 @@ interface Props {
 
 const Table: React.FC<Props> = ({
   title,
+  id,
   columns,
   fuctionApi,
   deleteApi,
   linkDetails,
-  classCols = "grid-cols-6",
+  classCols = "grid-cols-8",
   plus = true,
 }) => {
   const { setPopup } = useContext(PopupContext);
@@ -30,8 +32,13 @@ const Table: React.FC<Props> = ({
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await fuctionApi();
-      setData(res);
+      if (id) {
+        const res = await fuctionApi(id);
+        setData(res);
+      } else {
+        const res = await fuctionApi();
+        setData(res);
+      }
     };
     fetch();
   }, [refresh]);
@@ -54,11 +61,9 @@ const Table: React.FC<Props> = ({
   };
 
   return (
-    <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+    <div className="rounded-sm border border-stroke bg-white shadow-default">
       <div className="py-6 px-4 md:px-6 xl:px-7.5 flex justify-between items-center">
-        <h4 className="text-xl font-semibold text-black dark:text-white">
-          {title}
-        </h4>
+        <h4 className="text-xl font-semibold text-black ">{title}</h4>
         <div className="flex gap-2">
           <button className="bg-white rounded-xl hover:bg-gray-400">
             <img
@@ -84,7 +89,7 @@ const Table: React.FC<Props> = ({
       </div>
 
       <div
-        className={`grid ${classCols} border-t border-stroke py-4.5 px-4 dark:border-strokedark md:px-6 2xl:px-7.5`}
+        className={`grid ${classCols} border-t border-stroke py-4.5 px-4 md:px-6 2xl:px-7.5`}
       >
         {columns.map((column, index) => (
           <div
@@ -102,7 +107,7 @@ const Table: React.FC<Props> = ({
       {data.map((items) => (
         <div
           key={items._id}
-          className={`grid ${classCols} border-t border-stroke py-4.5 px-4 dark:border-strokedark md:px-6 2xl:px-7.5`}
+          className={`grid ${classCols} border-t border-stroke py-4.5 px-4 md:px-6 2xl:px-7.5`}
         >
           {columns.map((col, index) => (
             <div
@@ -110,9 +115,7 @@ const Table: React.FC<Props> = ({
               className={`col-span-${col.span} flex items-center`}
             >
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                <p className="text-sm text-black dark:text-white">
-                  {col.render(items)}
-                </p>
+                <p className="text-sm text-black">{col.render(items)}</p>
               </div>
             </div>
           ))}

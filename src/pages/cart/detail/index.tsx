@@ -28,11 +28,11 @@ const OrderDetails = () => {
       totalOrder: totalOrder,
     };
     updateProductQuantity(cartOrder);
-    postOrder(order);
-    // const res = await payOrder(order);
-    // if (res) {
-    //   router.push(res.hrefSandbox);
-    // }
+    // postOrder(order);
+    const res = await payOrder(order);
+    if (res) {
+      router.push(res.hrefSandbox);
+    }
   };
 
   return (
