@@ -72,7 +72,7 @@ const Header = () => {
         </div>
 
         <Link href={"/"} className="order-1 md:order-2">
-          <p className="flex items-center tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl ">
+          <p className="flex items-center tracking-wide no-underline hover:no-underline font-black text-gray-800 text-xl ">
             <svg
               className="fill-current text-gray-800 mr-2"
               xmlns="http://www.w3.org/2000/svg"
@@ -131,9 +131,9 @@ const Header = () => {
                   >
                     <path
                       stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       d="m1 1 4 4 4-4"
                     />
                   </svg>

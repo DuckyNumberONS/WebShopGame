@@ -67,8 +67,7 @@ const OrderList = () => {
         fuctionApi={getOrder}
         title="Order"
         columns={columns}
-        linkDetails="/admin/order/"
-        classCols="grid-cols-7"
+        linkDetails="/admin/order"
         plus={false}
       />
     </>
