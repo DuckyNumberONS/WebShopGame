@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import { useSelector } from "react-redux";
 import { user } from "@/lib/redux/selector/selector";
+import Link from "next/link";
 
 interface PropsListItems {
   data: Array<Product>;
@@ -47,7 +48,7 @@ const ListItem = ({ data, category }: PropsListItems) => {
   };
   return (
     <>
-      <section className="bg-white py-8">
+      <section className="py-8">
         <div className="container mx-auto flex items-center flex-wrap pt-4 pb-6">
           <nav id="store" className="w-full z-30 top-0 px-6 py-1">
             <div className="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-2 py-3">
@@ -98,11 +99,13 @@ const ListItem = ({ data, category }: PropsListItems) => {
                 key={items._id}
                 className="w-full md:w-1/3 xl:w-1/4 p-3 flex flex-col"
               >
-                <div className="p-3 bg-gray-100 rounded-md">
-                  <img
-                    className="hover:grow hover:shadow-lg"
-                    src={`${items.urlImage}`}
-                  />
+                <div className="p-3 bg-white rounded-md">
+                  <Link href={`/products/${items._id}`}>
+                    <img
+                      className="hover:grow hover:shadow-lg"
+                      src={`${items.urlImage}`}
+                    />
+                  </Link>
                   <div className="pt-3 flex items-center justify-between">
                     <p className="">{items.title}</p>
                     <svg

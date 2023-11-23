@@ -59,7 +59,7 @@ const OrderList = () => {
         fuctionApi={getOrder}
         title="Order"
         columns={columns}
-        linkDetails="/admin/order/"
+        linkDetails="/admin/order"
         plus={false}
       />
     </>

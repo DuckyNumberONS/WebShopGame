@@ -30,6 +30,16 @@ export const postUser = async (data: User) => {
   }
 };
 
+export const updateItemUser = async (data: User, id: string) => {
+  try {
+    const response = await axios.put(`/user/updateUser/${id}`, data);
+    const producs = response.data;
+    return producs;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const deleteUser = async (id: string) => {
   try {
     const response = await axios.delete(`/user/deleteUser/${id}`);

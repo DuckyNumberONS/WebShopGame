@@ -15,7 +15,7 @@ interface SelectProps {
   classLabel: string;
   classSelect: string;
   options: Array<OptionProps>;
-  defaultValue?: any;
+  defaultValue?: string;
 }
 
 const Select: React.FC<SelectProps> = ({

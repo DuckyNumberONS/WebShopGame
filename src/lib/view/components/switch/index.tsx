@@ -7,7 +7,7 @@ interface SwitcherProps {
   register: any;
   errors: any;
   errorsOption?: any;
-  defaultValue?: any;
+  defaultValue?: boolean;
 }
 
 const Switcher: React.FC<SwitcherProps> = ({
@@ -19,7 +19,7 @@ const Switcher: React.FC<SwitcherProps> = ({
   errorsOption,
   defaultValue,
 }) => {
-  const [enabled, setEnabled] = useState(false);
+  const [enabled, setEnabled] = useState(defaultValue ? defaultValue : false);
   const handleChange = () => {
     setEnabled(!enabled);
   };
