@@ -10,10 +10,7 @@ interface DataObject {
 interface Props {
   setConfirm: (value: boolean) => void;
   data: DataObject;
-  fuctionApi: (
-    data: any,
-    id?: string | string[]
-  ) => Promise<Product[] | User[]>;
+  functionApi: (data: any, id?: string) => Promise<Product[] | User[]>;
   className?: string;
   classPositionBox?: string;
 }
@@ -21,7 +18,7 @@ interface Props {
 const Confirm: React.FC<Props> = ({
   setConfirm,
   data,
-  fuctionApi,
+  functionApi,
   className,
   classPositionBox,
 }) => {
@@ -42,10 +39,10 @@ const Confirm: React.FC<Props> = ({
     e.preventDefault();
     setConfirm(false);
     setPopup(false);
-    if (id) {
-      await fuctionApi(data, id);
+    if (id && typeof id === "string") {
+      await functionApi(data, id);
     } else {
-      await fuctionApi(data);
+      await functionApi(data);
     }
   };
 
@@ -53,7 +50,7 @@ const Confirm: React.FC<Props> = ({
     <div className={className}>
       <div className={`w-full max-w-6xl mx-auto relative ${classPositionBox}`}>
         <form
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 z-10"
           action="#"
           onSubmit={handleSubmit}
         >

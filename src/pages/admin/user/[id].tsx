@@ -1,8 +1,10 @@
-import { getUserById } from "@/api/user";
+import { getUserById, updateItemUser } from "@/api/user";
 import { Product } from "@/lib/domain/product";
 import { User } from "@/lib/domain/user";
 import { PopupContext } from "@/lib/hook/Context/popup";
-// import EditButton from "@/lib/view/components/edit-button";
+import FormPopup from "@/lib/view/components/form/form-popup";
+import Input from "@/lib/view/components/input";
+import Switcher from "@/lib/view/components/switch";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
@@ -29,7 +31,145 @@ const Details = () => {
 
   return (
     <section className="text-gray-700 body-font overflow-hidden dark:bg-boxdark bg-white">
-      {/* <Formroduct fuctionApi={updateItemProduct} defaultValue={items} /> */}
+      <FormPopup fuctionApi={updateItemUser}>
+        {(props: any) => (
+          <>
+            <div className="mb-4">
+              <Input
+                label="User Name"
+                name="username"
+                type="text"
+                register={props.registers}
+                defaultValue={items?.username ? items.username : ""}
+                errors={props.error}
+                placeholder="User Name"
+                errorsOption={{
+                  required: { value: true, message: "User Name is empty" },
+                  maxLength: {
+                    value: 50,
+                    message: "Title cannot exceed 50 characters",
+                  },
+                  minLength: {
+                    value: 6,
+                    message: "Password must not be less than 6 characters",
+                  },
+                }}
+                classLabel="block text-gray-700 text-sm font-bold mb-2"
+                classInput="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+            <div className="mb-4">
+              <Input
+                label="Email"
+                name="email"
+                type="text"
+                register={props.registers}
+                defaultValue={items?.email ? items.email : ""}
+                errors={props.error}
+                placeholder="Email"
+                errorsOption={{
+                  required: {
+                    value: true,
+                    message: "Email is empty",
+                  },
+                  maxLength: {
+                    value: 50,
+                    message: "Email cannot exceed 50 characters",
+                  },
+                  minLength: {
+                    value: 5,
+                    message: "Password must not be less than 6 characters",
+                  },
+                }}
+                classLabel="block text-gray-700 text-sm font-bold mb-2"
+                classInput="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+            <div className="mb-4">
+              <Input
+                label="Password"
+                name="password"
+                type="password"
+                register={props.registers}
+                defaultValue={items?.password ? items.password : ""}
+                errors={props.error}
+                placeholder="Password"
+                errorsOption={{
+                  required: { value: true, message: "Password is empty" },
+                  maxLength: {
+                    value: 250,
+                    message: "Password cannot exceed 250 characters",
+                  },
+                  minLength: {
+                    value: 6,
+                    message: "Password must not be less than 6 characters",
+                  },
+                }}
+                classLabel="block text-gray-700 text-sm font-bold mb-2"
+                classInput="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+            <div className="mb-4">
+              <Input
+                label="Address"
+                name="address"
+                type="text"
+                register={props.registers}
+                defaultValue={items?.address ? items.address : ""}
+                errors={props.error}
+                placeholder="Address"
+                errorsOption={{
+                  required: { value: true, message: "Address is empty" },
+                  maxLength: {
+                    value: 50,
+                    message: "Address cannot exceed 50 characters",
+                  },
+                  minLength: {
+                    value: 6,
+                    message: "Password must not be less than 6 characters",
+                  },
+                }}
+                classLabel="block text-gray-700 text-sm font-bold mb-2"
+                classInput="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+            <div className="mb-4">
+              <Input
+                label="urlAvatar"
+                name="urlavatar"
+                type="text"
+                register={props.registers}
+                defaultValue={items?.urlavatar ? items.urlavatar : ""}
+                errors={props.error}
+                placeholder="urlAvatar"
+                errorsOption={{
+                  required: { value: true, message: "urlAvatar is empty" },
+                  maxLength: {
+                    value: 250,
+                    message: "Address cannot exceed 250 characters",
+                  },
+                  minLength: {
+                    value: 6,
+                    message: "Password must not be less than 6 characters",
+                  },
+                }}
+                classLabel="block text-gray-700 text-sm font-bold mb-2"
+                classInput="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+            <div className="mb-4">
+              <Switcher
+                name="admin"
+                register={props.registers}
+                defaultValue={items?.admin ? items.admin : ""}
+                errors={props.error}
+                label="Role Admin"
+                classLabel="block text-gray-700 text-sm font-bold mb-2"
+              />
+            </div>
+          </>
+        )}
+      </FormPopup>
       <div className="container px-5 pt-5 pb-15 mx-auto">
         <button className="pb-4">
           <Link href="/admin/user">
@@ -63,7 +203,7 @@ const Details = () => {
             </div> */}
               </div>
               <div className="relative">
-                <div className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
+                <div className="z-0 w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
                   {items?.urlavatar ? (
                     <img src={items?.urlavatar} alt="Avatar" />
                   ) : (
@@ -74,20 +214,20 @@ const Details = () => {
                       fill="currentColor"
                     >
                       <path
-                        fill-rule="evenodd"
+                        fillRule="evenodd"
                         d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                        clip-rule="evenodd"
+                        clipRule="evenodd"
                       />
                     </svg>
                   )}
                 </div>
               </div>
               <div className="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
-                <button className="text-white py-2 px-4 uppercase rounded bg-blue-400 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
-                  Connect
-                </button>
-                <button className="text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
-                  Message
+                <button
+                  className="text-white py-2 px-4 uppercase rounded bg-blue-400 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
+                  onClick={handleClick}
+                >
+                  Edit
                 </button>
               </div>
             </div>

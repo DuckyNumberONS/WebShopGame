@@ -2,10 +2,10 @@ import { deleteProduct, getListProduct, postProduct } from "@/api/product";
 import React from "react";
 import Table from "@/lib/view/components/table";
 import { Columns } from "@/lib/view/components/table/table";
-import Form from "@/lib/view/components/form";
 import Input from "@/lib/view/components/input";
 import Select from "@/lib/view/components/select";
 import Switcher from "@/lib/view/components/switch";
+import FormPopup from "@/lib/view/components/form/form-popup";
 
 const ProductList = () => {
   const columns: Columns[] = [
@@ -83,7 +83,7 @@ const ProductList = () => {
 
   return (
     <>
-      <Form fuctionApi={postProduct} className="">
+      <FormPopup functionApi={postProduct} className="">
         {(props: any) => (
           <>
             <div className="mb-4">
@@ -214,7 +214,7 @@ const ProductList = () => {
             </div>
           </>
         )}
-      </Form>
+      </FormPopup>
       <Table
         deleteApi={deleteProduct}
         title="Products"
