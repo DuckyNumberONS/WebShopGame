@@ -1,8 +1,11 @@
 import { getItemProduct, updateItemProduct } from "@/api/product";
 import { Product } from "@/lib/domain/product";
 import { PopupContext } from "@/lib/hook/Context/popup";
+import FormPopup from "@/lib/view/components/form/form-popup";
+import Input from "@/lib/view/components/input";
+import Select from "@/lib/view/components/select";
+import Switcher from "@/lib/view/components/switch";
 // import EditButton from "@/lib/view/components/edit-button";
-// import Formroduct from "@/lib/view/components/form/form-product";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
@@ -27,9 +30,161 @@ const Details = () => {
     fetch();
   }, []);
 
+  const options = [
+    {
+      value: "game",
+      text: "Game",
+    },
+    {
+      value: "study",
+      text: "Study",
+    },
+    {
+      value: "entertainment",
+      text: "Entertainment",
+    },
+  ];
   return (
     <section className="text-gray-700 body-font overflow-hidden dark:bg-boxdark bg-white">
-      {/* <Formroduct fuctionApi={updateItemProduct} defaultValue={items} /> */}
+      <FormPopup functionApi={updateItemProduct}>
+        {(props: any) => (
+          <>
+            <div className="mb-4">
+              <Input
+                label="Tile"
+                name="title"
+                type="text"
+                register={props.registers}
+                defaultValue={items?.title ? items.title : ""}
+                errors={props.error}
+                placeholder="Title"
+                errorsOption={{
+                  required: { value: true, message: "Title is empty" },
+                  maxLength: {
+                    value: 250,
+                    message: "Title cannot exceed 50 characters",
+                  },
+                  minLength: {
+                    value: 5,
+                    message: "Password must not be less than 6 characters",
+                  },
+                }}
+                classLabel="block text-gray-700 text-sm font-bold mb-2"
+                classInput="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+            <div className="mb-4">
+              <Input
+                label="Description"
+                name="description"
+                type="text"
+                register={props.registers}
+                defaultValue={items?.description ? items.description : ""}
+                errors={props.error}
+                placeholder="Description"
+                errorsOption={{
+                  required: {
+                    value: true,
+                    message: "Description is empty",
+                  },
+                  maxLength: {
+                    value: 500,
+                    message: "Description cannot exceed 500 characters",
+                  },
+                  minLength: {
+                    value: 5,
+                    message: "Password must not be less than 6 characters",
+                  },
+                }}
+                classLabel="block text-gray-700 text-sm font-bold mb-2"
+                classInput="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+            <div className="mb-4">
+              <Input
+                label="Price"
+                name="price"
+                type="number"
+                register={props.registers}
+                defaultValue={items?.price ? items.price : 0}
+                errors={props.error}
+                placeholder="Price"
+                errorsOption={{
+                  required: { value: true, message: "Price is empty" },
+                }}
+                classLabel="block text-gray-700 text-sm font-bold mb-2"
+                classInput="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+            <div className="mb-4">
+              <Input
+                label="Quantity"
+                name="quantity"
+                type="number"
+                register={props.registers}
+                defaultValue={items?.quantity ? items.quantity : 0}
+                errors={props.error}
+                placeholder="Quantity"
+                errorsOption={{
+                  required: { value: true, message: "Quantity is empty" },
+                }}
+                classLabel="block text-gray-700 text-sm font-bold mb-2"
+                classInput="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+            <div className="mb-4">
+              <Input
+                label="UrlImage"
+                name="urlImage"
+                type="text"
+                register={props.registers}
+                defaultValue={items?.urlImage ? items.urlImage : ""}
+                errors={props.error}
+                placeholder="UrlImage"
+                errorsOption={{
+                  required: { value: true, message: "UrlImage is empty" },
+                  maxLength: {
+                    value: 250,
+                    message: "Title cannot exceed 50 characters",
+                  },
+                  minLength: {
+                    value: 5,
+                    message: "Password must not be less than 6 characters",
+                  },
+                }}
+                classLabel="block text-gray-700 text-sm font-bold mb-2"
+                classInput="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+            <div className="mb-4">
+              <Select
+                label="Category"
+                name="category"
+                register={props.registers}
+                defaultValue={items?.category && items.urlImage}
+                errors={props.error}
+                textSelect="Choose category"
+                errorsOption={{
+                  required: { value: true, message: "Category is empty" },
+                }}
+                classLabel="block text-gray-700 text-sm font-bold mb-2"
+                classSelect="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                options={options}
+              />
+            </div>
+            <div className="mb-4">
+              <Switcher
+                name="isHot"
+                register={props.registers}
+                defaultValue={items?.isHot ? items.isHot : !items?.isHot}
+                errors={props.error}
+                label="Best seller"
+                classLabel="block text-gray-700 text-sm font-bold mb-2"
+              />
+            </div>
+          </>
+        )}
+      </FormPopup>
       <div className="container px-5 pt-5 pb-15 mx-auto">
         <button className="pb-4">
           <Link href="/admin/products">
@@ -84,9 +239,9 @@ const Details = () => {
                 <svg
                   fill="currentColor"
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   className="w-4 h-4 text-red-500"
                   viewBox="0 0 24 24"
                 >
@@ -95,9 +250,9 @@ const Details = () => {
                 <svg
                   fill="currentColor"
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   className="w-4 h-4 text-red-500"
                   viewBox="0 0 24 24"
                 >
@@ -106,9 +261,9 @@ const Details = () => {
                 <svg
                   fill="currentColor"
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   className="w-4 h-4 text-red-500"
                   viewBox="0 0 24 24"
                 >
@@ -117,9 +272,9 @@ const Details = () => {
                 <svg
                   fill="currentColor"
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   className="w-4 h-4 text-red-500"
                   viewBox="0 0 24 24"
                 >
@@ -128,9 +283,9 @@ const Details = () => {
                 <svg
                   fill="none"
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   className="w-4 h-4 text-red-500"
                   viewBox="0 0 24 24"
                 >
@@ -144,9 +299,9 @@ const Details = () => {
                 <a className="text-gray-500">
                   <svg
                     fill="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     className="w-5 h-5"
                     viewBox="0 0 24 24"
                   >
@@ -156,9 +311,9 @@ const Details = () => {
                 <a className="ml-2 text-gray-500">
                   <svg
                     fill="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     className="w-5 h-5"
                     viewBox="0 0 24 24"
                   >
@@ -168,9 +323,9 @@ const Details = () => {
                 <a className="ml-2 text-gray-500">
                   <svg
                     fill="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     className="w-5 h-5"
                     viewBox="0 0 24 24"
                   >

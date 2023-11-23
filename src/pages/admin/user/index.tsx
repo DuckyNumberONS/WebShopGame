@@ -4,7 +4,7 @@ import Table from "@/lib/view/components/table";
 import { Columns } from "@/lib/view/components/table/table";
 import Switcher from "@/lib/view/components/switch";
 import Input from "@/lib/view/components/input";
-import Form from "@/lib/view/components/form";
+import FormPopup from "@/lib/view/components/form/form-popup";
 
 const UserList = () => {
   const columns: Columns[] = [
@@ -61,7 +61,7 @@ const UserList = () => {
 
   return (
     <>
-      <Form fuctionApi={postUser} className="">
+      <FormPopup fuctionApi={postUser} className="">
         {(props: any) => (
           <>
             <div className="mb-4">
@@ -193,13 +193,13 @@ const UserList = () => {
             </div>
           </>
         )}
-      </Form>
+      </FormPopup>
       <Table
         deleteApi={deleteUser}
         title="User"
         columns={columns}
         fuctionApi={getUser}
-        linkDetails="/admin/user/"
+        linkDetails="/admin/user"
       />
     </>
   );

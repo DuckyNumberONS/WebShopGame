@@ -14,7 +14,7 @@ const Register = () => {
   } = useForm<User>();
 
   const [passwordShown, setPasswordShown] = useState(false);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({});
   const [confirm, setConfirm] = useState(false);
   // const [accept, setAccept] = useState(false);
   // const [error, setError] = useState("");
