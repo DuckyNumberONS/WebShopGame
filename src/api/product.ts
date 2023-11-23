@@ -21,10 +21,7 @@ export const getItemProduct = async (id: string | string[] | undefined) => {
   }
 };
 
-export const updateItemProduct = async (
-  data: ProductPost,
-  id: string | string[] | undefined
-) => {
+export const updateItemProduct = async (data: ProductPost, id: string) => {
   try {
     const response = await axios.put(`/product/updateProduct/${id}`, data);
     const producs = response.data;

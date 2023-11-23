@@ -10,7 +10,7 @@ interface InputProps {
   classLabel: string;
   classInput: string;
   type: string;
-  defaultValue?: any;
+  defaultValue?: string | number;
 }
 
 const Input: React.FC<InputProps> = ({
